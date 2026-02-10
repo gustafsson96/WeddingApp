@@ -1,0 +1,83 @@
+@model IEnumerable<WeddingApp.Models.Guest>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Attending)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RSVPTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FoodPref)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Allergies)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Message)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RSVPToken)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InvitationSentAt)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Attending)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RSVPTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FoodPref)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Allergies)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Message)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RSVPToken)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InvitationSentAt)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.GuestId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.GuestId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.GuestId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
