@@ -5,8 +5,8 @@ namespace WeddingApp.Models
         // Properties
         public int GuestId { get; set; } // pk
         public int WeddingId { get; set; } // fk
-        public string Name { get; set; }
-        public string Email { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
         public bool? Attending { get; set; }
         public DateTime? RSVPTime { get; set; }
         public string? FoodPref { get; set; }
