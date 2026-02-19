@@ -2,27 +2,45 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WeddingApp.Data;
 using WeddingApp.Models;
 
+// Scaffolded and modified Guest controller. Requires authorization.
 namespace WeddingApp.Controllers
 {
+    [Authorize]
     public class GuestsController : Controller
     {
+        private readonly UserManager<IdentityUser> _userManager;
         private readonly ApplicationDbContext _context;
 
-        public GuestsController(ApplicationDbContext context)
+        // Constructor
+        public GuestsController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Guests
+        // Show all guests for logged in users wedding
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Guests.ToListAsync());
+            var user = await _userManager.GetUserAsync(User);
+            var wedding = await _context.Weddings.FirstOrDefaultAsync(w => w.UserId == user.Id);
+
+            if (wedding == null)
+                return BadRequest("You must create a wedding first.");
+
+            var guests = await _context
+                .Guests.Where(g => g.WeddingId == wedding.WeddingId)
+                .ToListAsync();
+            ViewBag.WeddingId = wedding.WeddingId;
+            return View(guests);
         }
 
         // GET: Guests/Details/5
@@ -33,8 +51,8 @@ namespace WeddingApp.Controllers
                 return NotFound();
             }
 
-            var guest = await _context.Guests
-                .FirstOrDefaultAsync(m => m.GuestId == id);
+            // Get all guests for the wedding
+            var guest = await _context.Guests.FirstOrDefaultAsync(m => m.GuestId == id);
             if (guest == null)
             {
                 return NotFound();
@@ -44,9 +62,26 @@ namespace WeddingApp.Controllers
         }
 
         // GET: Guests/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            // Get logged in user
+            var user = await _userManager.GetUserAsync(User);
+
+            // Get logged in users wedding
+            var wedding = await _context
+                .Weddings.Where(w => w.UserId == user.Id)
+                .FirstOrDefaultAsync();
+
+            if (wedding == null)
+            {
+                return BadRequest("You must create a wedding before adding guests.");
+            }
+
+            // Create a guest for the specific wedding and generate unique token
+            var guest = new Guest { WeddingId = wedding.WeddingId, RSVPToken = Guid.NewGuid() };
+
+            // Send guest to the view
+            return View(guest);
         }
 
         // POST: Guests/Create
@@ -54,15 +89,38 @@ namespace WeddingApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("GuestId,WeddingId,Name,Email,Attending,RSVPTime,FoodPref,Allergies,Message,RSVPToken,InvitationSentAt")] Guest guest)
+        public async Task<IActionResult> Create(
+            [Bind(
+                "GuestId,Name,Email,Attending,RSVPTime,FoodPref,Allergies,Message,RSVPToken,InvitationSentAt"
+            )]
+                Guest guest
+        )
         {
-            if (ModelState.IsValid)
+            // Validate form data
+            if (!ModelState.IsValid)
             {
-                _context.Add(guest);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View(guest);
             }
-            return View(guest);
+
+            // For safety - get logged in user and wedding again
+            var user = await _userManager.GetUserAsync(User);
+            var wedding = await _context.Weddings.FirstOrDefaultAsync(w => w.UserId == user.Id);
+
+            if (wedding == null)
+                return BadRequest("You must create a wedding first.");
+
+            // Link guest to a specific wedding
+            guest.WeddingId = wedding.WeddingId;
+
+            // Create RSVPToken if it is missing
+            if (guest.RSVPToken == Guid.Empty)
+                guest.RSVPToken = Guid.NewGuid();
+
+            // Add guest to database
+            _context.Add(guest);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Guests/Edit/5
@@ -86,8 +144,15 @@ namespace WeddingApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("GuestId,WeddingId,Name,Email,Attending,RSVPTime,FoodPref,Allergies,Message,RSVPToken,InvitationSentAt")] Guest guest)
+        public async Task<IActionResult> Edit(
+            int id,
+            [Bind(
+                "GuestId,WeddingId,Name,Email,Attending,RSVPTime,FoodPref,Allergies,Message,RSVPToken,InvitationSentAt"
+            )]
+                Guest guest
+        )
         {
+            // Ensure the correct guest is being updated
             if (id != guest.GuestId)
             {
                 return NotFound();
@@ -97,6 +162,7 @@ namespace WeddingApp.Controllers
             {
                 try
                 {
+                    // Update and save
                     _context.Update(guest);
                     await _context.SaveChangesAsync();
                 }
@@ -111,7 +177,7 @@ namespace WeddingApp.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { weddingId = guest.WeddingId });
             }
             return View(guest);
         }
@@ -124,8 +190,7 @@ namespace WeddingApp.Controllers
                 return NotFound();
             }
 
-            var guest = await _context.Guests
-                .FirstOrDefaultAsync(m => m.GuestId == id);
+            var guest = await _context.Guests.FirstOrDefaultAsync(m => m.GuestId == id);
             if (guest == null)
             {
                 return NotFound();
@@ -139,14 +204,19 @@ namespace WeddingApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            // Get guest
             var guest = await _context.Guests.FindAsync(id);
-            if (guest != null)
-            {
-                _context.Guests.Remove(guest);
-            }
+            if (guest == null)
+                return NotFound();
 
+            // Save WeddingId for redirect
+            var weddingId = guest.WeddingId;
+
+            // Delete and save
+            _context.Guests.Remove(guest);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            return RedirectToAction(nameof(Index), new { weddingId });
         }
 
         private bool GuestExists(int id)

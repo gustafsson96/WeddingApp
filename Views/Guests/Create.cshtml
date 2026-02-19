@@ -13,8 +13,7 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="WeddingId" class="control-label"></label>
-                <select asp-for="WeddingId" class ="form-control" asp-items="ViewBag.WeddingId"></select>
+                <input type="hidden" asp-for="WeddingId" />
             </div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
@@ -32,9 +31,7 @@
                 <span asp-validation-for="Attending" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="RSVPTime" class="control-label"></label>
-                <input asp-for="RSVPTime" class="form-control" />
-                <span asp-validation-for="RSVPTime" class="text-danger"></span>
+                <input type="hidden" asp-for="RSVPTime" />
             </div>
             <div class="form-group">
                 <label asp-for="FoodPref" class="control-label"></label>
@@ -52,14 +49,10 @@
                 <span asp-validation-for="Message" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="RSVPToken" class="control-label"></label>
-                <input asp-for="RSVPToken" class="form-control" />
-                <span asp-validation-for="RSVPToken" class="text-danger"></span>
+                <input type="hidden" asp-for="RSVPToken" />
             </div>
             <div class="form-group">
-                <label asp-for="InvitationSentAt" class="control-label"></label>
-                <input asp-for="InvitationSentAt" class="form-control" />
-                <span asp-validation-for="InvitationSentAt" class="text-danger"></span>
+                <input asp-for="InvitationSentAt" class="form-control" type="hidden" />
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
