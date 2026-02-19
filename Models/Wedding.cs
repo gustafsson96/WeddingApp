@@ -12,13 +12,13 @@ namespace WeddingApp.Models
         public string UserId { get; set; } = string.Empty;
 
         [ForeignKey("UserId")]
-        public IdentityUser Owner { get; set; } = null!;
+        public IdentityUser? Owner { get; set; }
 
         // Properties with wedding information
         public string FirstPerson { get; set; } = string.Empty;
         public string SecondPerson { get; set; } = string.Empty;
         public DateTime Date { get; set; }
-        public TimeSpan Time { get; set; }
+        public string Time { get; set; } = "";
         public string Venue { get; set; } = string.Empty;
         public string City { get; set; } = string.Empty;
         public string? AdditionalInfo { get; set; }

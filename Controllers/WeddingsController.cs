@@ -13,7 +13,6 @@ using WeddingApp.Models;
 // Scaffolded and modified Wedding controller. Requires authorization.
 namespace WeddingApp.Controllers
 {
-    [Authorize]
     public class WeddingsController : Controller
     {
         // Used to get the logged in user

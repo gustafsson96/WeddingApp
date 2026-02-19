@@ -14,8 +14,10 @@ obj/
 # macOS system files
 .DS_Store
 
-# SQLite database
+# SQLite
 *.db
+*.db-shm
+*.db-wal
 
 # Development settings
 appsettings.Development.json
