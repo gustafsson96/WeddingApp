@@ -29,6 +29,6 @@ namespace WeddingApp.Models
         public ICollection<Gift> Gifts { get; set; } = new List<Gift>();
 
         // Set unique slug for public url
-        public string PublicSlug { get; set; } = Guid.NewGuid().ToString();
+        public string PublicSlug { get; set; }
     }
 }
