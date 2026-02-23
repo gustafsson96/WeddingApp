@@ -1,6 +1,11 @@
 @model WeddingApp.Models.Wedding
 
-<div class="hero" style="background-image:url('@Model.HeaderImageUrl')">
+
+@if (!string.IsNullOrEmpty(Model.HeaderImageUrl))
+{
+    <img src="@Model.HeaderImageUrl" alt="Wedding Header" class="img-fluid" />
+}
+<div>
     <h1>@Model.FirstPerson & @Model.SecondPerson</h1>
 </div>
 
