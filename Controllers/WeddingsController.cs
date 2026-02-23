@@ -94,6 +94,12 @@ namespace WeddingApp.Controllers
                 // Link wedding to user
                 wedding.UserId = user.Id;
 
+                // Generate unique slug
+                wedding.PublicSlug = await GenerateUniqueSlug(
+                    wedding.FirstPerson,
+                    wedding.SecondPerson
+                );
+
                 // Add to database
                 _context.Add(wedding);
                 await _context.SaveChangesAsync();
@@ -230,6 +236,37 @@ namespace WeddingApp.Controllers
 
             // Redirect to dashboard after delete
             return RedirectToAction(nameof(Index));
+        }
+
+        // Create slug based on names of wedding couple
+        private async Task<string> GenerateUniqueSlug(string first, string second)
+        {
+            // Replace Swedish characters
+            string baseSlug = $"{first}-och-{second}"
+                .ToLower()
+                .Trim()
+                .Replace("å", "a")
+                .Replace("ä", "a")
+                .Replace("ö", "o")
+                .Replace(" ", "-");
+
+            // Remove double hyphens
+            while (baseSlug.Contains("--"))
+            {
+                baseSlug = baseSlug.Replace("--", "-");
+            }
+
+            string slug = baseSlug;
+            int counter = 1;
+
+            // Add number if the name combination already exists
+            while (await _context.Weddings.AnyAsync(w => w.PublicSlug == slug))
+            {
+                slug = $"{baseSlug}-{counter}";
+                counter++;
+            }
+
+            return slug;
         }
     }
 }
