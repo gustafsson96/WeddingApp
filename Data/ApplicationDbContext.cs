@@ -13,5 +13,13 @@ namespace WeddingApp.Data
         public DbSet<Wedding> Weddings { get; set; }
         public DbSet<Guest> Guests { get; set; }
         public DbSet<Gift> Gifts { get; set; }
+
+        // Make PublicSlug unique in the database
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Wedding>().HasIndex(w => w.PublicSlug).IsUnique();
+        }
     }
 }
