@@ -1,0 +1,19 @@
+@model WeddingApp.Models.Wedding
+
+<div class="hero" style="background-image:url('@Model.HeaderImageUrl')">
+    <h1>@Model.FirstPerson & @Model.SecondPerson</h1>
+</div>
+
+<section>
+    <h2>Welcome!</h2>
+    <p>@Model.Date.ToShortDateString() kl @Model.Time</p>
+    <p>@Model.Venue, @Model.City</p>
+</section>
+
+@if (!string.IsNullOrEmpty(Model.AdditionalInfo))
+{
+    <section>
+        <h2>Information</h2>
+        <p>@Model.AdditionalInfo</p>
+    </section>
+}

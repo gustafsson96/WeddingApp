@@ -238,11 +238,32 @@ namespace WeddingApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // GET: Public wedding page based on PublicSlug
+        [AllowAnonymous]
+        public async Task<IActionResult> Public(string slug)
+        {
+            if (string.IsNullOrEmpty(slug))
+            {
+                return NotFound();
+            }
+
+            var wedding = await _context
+                .Weddings.Include(w => w.Gifts)
+                .FirstOrDefaultAsync(w => w.PublicSlug == slug);
+
+            if (wedding == null)
+            {
+                return NotFound();
+            }
+
+            return View(wedding);
+        }
+
         // Create slug based on names of wedding couple
         private async Task<string> GenerateUniqueSlug(string first, string second)
         {
             // Replace Swedish characters
-            string baseSlug = $"{first}-och-{second}"
+            string baseSlug = $"{first}-and-{second}"
                 .ToLower()
                 .Trim()
                 .Replace("å", "a")
