@@ -11,5 +11,8 @@ namespace WeddingApp.Models
         public decimal? Price { get; set; }
         public bool IsReserved { get; set; }
         public string? ImageUrl { get; set; }
+
+        // Navigation property
+        public Wedding Wedding { get; set; } = null!;
     }
 }
