@@ -22,7 +22,7 @@ namespace WeddingApp.Models
         public string Venue { get; set; } = string.Empty;
         public string City { get; set; } = string.Empty;
         public string? AdditionalInfo { get; set; }
-        public string? HeaderImageUrl { get; set; }
+        public string? HeaderImagePath { get; set; }
 
         // Guests and gifts related to a wedding
         public ICollection<Guest> Guests { get; set; } = new List<Guest>();

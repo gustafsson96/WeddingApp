@@ -53,14 +53,14 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.AdditionalInfo)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.HeaderImageUrl)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.HeaderImageUrl)
+        <dt class="col-sm-2">Header Image</dt>
+        <dd class="col-sm-10">
+            @if (!string.IsNullOrEmpty(Model.HeaderImagePath))
+                {
+                    <img src="@Model.HeaderImagePath" class="img-fluid mb-2" />
+                }
         </dd>
     </dl>
-    
     <form asp-action="Delete">
         <input type="hidden" asp-for="WeddingId" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |

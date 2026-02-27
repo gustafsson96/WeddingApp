@@ -82,7 +82,7 @@ namespace WeddingApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            [Bind("FirstPerson,SecondPerson,Date,Time,Venue,City,AdditionalInfo,HeaderImageUrl")]
+            [Bind("FirstPerson,SecondPerson,Date,Time,Venue,City,AdditionalInfo,HeaderImagePath")]
                 Wedding wedding
         )
         {
@@ -141,7 +141,7 @@ namespace WeddingApp.Controllers
         public async Task<IActionResult> Edit(
             int id,
             [Bind(
-                "WeddingId,FirstPerson,SecondPerson,Date,Time,Venue,City,AdditionalInfo,HeaderImageUrl"
+                "WeddingId,FirstPerson,SecondPerson,Date,Time,Venue,City,AdditionalInfo,HeaderImagePath"
             )]
                 Wedding updatedWedding
         )
@@ -176,7 +176,7 @@ namespace WeddingApp.Controllers
                 wedding.Venue = updatedWedding.Venue;
                 wedding.City = updatedWedding.City;
                 wedding.AdditionalInfo = updatedWedding.AdditionalInfo;
-                wedding.HeaderImageUrl = updatedWedding.HeaderImageUrl;
+                wedding.HeaderImagePath = updatedWedding.HeaderImagePath;
 
                 await _context.SaveChangesAsync();
 

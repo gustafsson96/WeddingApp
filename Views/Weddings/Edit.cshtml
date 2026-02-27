@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data"> 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="WeddingId" />
             <div class="form-group">
@@ -48,11 +48,14 @@
                 <input asp-for="AdditionalInfo" class="form-control" />
                 <span asp-validation-for="AdditionalInfo" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="HeaderImageUrl" class="control-label"></label>
-                <input asp-for="HeaderImageUrl" class="form-control" />
-                <span asp-validation-for="HeaderImageUrl" class="text-danger"></span>
-            </div>
+           @if (!string.IsNullOrEmpty(Model.HeaderImagePath))
+               {
+                  <img src="@Model.HeaderImagePath" class="img-fluid mb-2" />
+                }
+                <div class="form-group">
+                <label class="control-label">Change Header Image</label>
+          <input type="file" name="headerImage" class="form-control" />
+          </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

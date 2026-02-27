@@ -1,10 +1,14 @@
 @model WeddingApp.Models.Wedding
 
-
-@if (!string.IsNullOrEmpty(Model.HeaderImageUrl))
+@if (!string.IsNullOrEmpty(Model.HeaderImagePath))
 {
-    <img src="@Model.HeaderImageUrl" alt="Wedding Header" class="img-fluid" />
+    <img src="@Model.HeaderImagePath" alt="Header for @Model.FirstPerson & @Model.SecondPerson" class="img-fluid mb-3" />
 }
+else
+{
+    <div class="mb-3" style="height:150px; background-color:#f0f0f0;"></div>
+}
+
 <div>
     <h1>@Model.FirstPerson & @Model.SecondPerson</h1>
 </div>
