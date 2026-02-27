@@ -324,7 +324,7 @@ namespace WeddingApp.Controllers
 
         // GET: Public wedding page based on PublicSlug
         [AllowAnonymous]
-        [Route("{slug}")]
+        [Route("wedding/{slug}")]
         public async Task<IActionResult> Public(string slug)
         {
             if (string.IsNullOrEmpty(slug))
@@ -346,7 +346,7 @@ namespace WeddingApp.Controllers
 
         // GET: Wishlist page for a public wedding
         [AllowAnonymous]
-        [Route("{slug}/wishlist")]
+        [Route("wedding/{slug}/wishlist")]
         public async Task<IActionResult> Wishlist(string slug)
         {
             // Return 404 is no slug is provided
@@ -373,7 +373,9 @@ namespace WeddingApp.Controllers
             // Get the gift from the database
             var gift = await _context
                 .Gifts.Include(g => g.Wedding)
-                .FirstOrDefaultAsync(g => g.GiftId == request.GiftId && g.Wedding.PublicSlug == request.Slug);
+                .FirstOrDefaultAsync(g =>
+                    g.GiftId == request.GiftId && g.Wedding.PublicSlug == request.Slug
+                );
 
             if (gift == null)
                 return NotFound();
