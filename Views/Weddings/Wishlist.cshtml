@@ -1,0 +1,46 @@
+@model WeddingApp.Models.Wedding
+
+<h2>@Model.FirstPerson & @Model.SecondPerson's Wishlist</h2>
+
+<ul id="giftList">
+@foreach(var gift in Model.Gifts)
+{
+    <li data-giftid="@gift.GiftId">
+        @gift.Name
+        @if (gift.IsReserved)
+        {
+            <span>Reserved</span>
+        }
+        else
+        {
+            <button class="reserveBtn">Reserve</button>
+        }
+    </li>
+}
+</ul>
+
+@section Scripts {
+<script>
+document.querySelectorAll('.reserveBtn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+        if (!confirm("Are you sure you want to reserve this gift?")) return;
+
+        const li = btn.closest('li');
+        const giftId = li.dataset.giftid;
+        const slug = "@Model.PublicSlug";
+
+        const res = await fetch('/Weddings/Reserve', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ giftId: giftId, slug: slug })
+        });
+
+        if (res.ok) {
+            li.innerHTML = '<span>Reserved</span>';
+        } else {
+            alert('Could not reserve gift.');
+        }
+    });
+});
+</script>
+}
