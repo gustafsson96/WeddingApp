@@ -291,27 +291,6 @@ namespace WeddingApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Public wedding page based on PublicSlug
-        [AllowAnonymous]
-        public async Task<IActionResult> Public(string slug)
-        {
-            if (string.IsNullOrEmpty(slug))
-            {
-                return NotFound();
-            }
-
-            var wedding = await _context
-                .Weddings.Include(w => w.Gifts)
-                .FirstOrDefaultAsync(w => w.PublicSlug == slug);
-
-            if (wedding == null)
-            {
-                return NotFound();
-            }
-
-            return View(wedding);
-        }
-
         // Create slug based on names of wedding couple
         private async Task<string> GenerateUniqueSlug(string first, string second)
         {
@@ -341,6 +320,75 @@ namespace WeddingApp.Controllers
             }
 
             return slug;
+        }
+
+        // GET: Public wedding page based on PublicSlug
+        [AllowAnonymous]
+        [Route("{slug}")]
+        public async Task<IActionResult> Public(string slug)
+        {
+            if (string.IsNullOrEmpty(slug))
+            {
+                return NotFound();
+            }
+
+            var wedding = await _context
+                .Weddings.Include(w => w.Gifts)
+                .FirstOrDefaultAsync(w => w.PublicSlug == slug);
+
+            if (wedding == null)
+            {
+                return NotFound();
+            }
+
+            return View(wedding);
+        }
+
+        // GET: Wishlist page for a public wedding
+        [AllowAnonymous]
+        [Route("{slug}/wishlist")]
+        public async Task<IActionResult> Wishlist(string slug)
+        {
+            // Return 404 is no slug is provided
+            if (string.IsNullOrEmpty(slug))
+                return NotFound();
+
+            // Retrieve a wedding including gifts
+            var wedding = await _context
+                .Weddings.Include(w => w.Gifts)
+                .FirstOrDefaultAsync(w => w.PublicSlug == slug);
+
+            // Return 404 if no wedding is found
+            if (wedding == null)
+                return NotFound();
+
+            return View(wedding);
+        }
+
+        // Handle a reservation of a gift on a public wedding site
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Reserve([FromBody] ReserveRequest request)
+        {
+            // Get the gift from the database
+            var gift = await _context
+                .Gifts.Include(g => g.Wedding)
+                .FirstOrDefaultAsync(g => g.GiftId == request.GiftId && g.Wedding.PublicSlug == request.Slug);
+
+            if (gift == null)
+                return NotFound();
+
+            // Check if a gift is reserved or not
+            if (gift.IsReserved)
+                return BadRequest("This gift is already reserved.");
+
+            // Mark a gift as reserved
+            gift.IsReserved = true;
+
+            // Save to database
+            await _context.SaveChangesAsync();
+
+            return Ok();
         }
     }
 }
