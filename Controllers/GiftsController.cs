@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -83,8 +85,8 @@ namespace WeddingApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            // Bind allowed properties
-            [Bind("Name,Description,Link,Price,ImageUrl")] Gift gift
+            [Bind("Name,Description,Link,Price")] Gift gift,
+            IFormFile? giftImage
         )
         {
             if (!ModelState.IsValid)
@@ -105,6 +107,32 @@ namespace WeddingApp.Controllers
 
             // Set reserved to fault by default
             gift.IsReserved = false;
+
+            // Handle optional image upload
+            if (giftImage != null && giftImage.Length > 0)
+            {
+                // Buffer file in memory
+                using var ms = new MemoryStream();
+                await giftImage.CopyToAsync(ms);
+
+                // Create uploads folder if it does not exist
+                var uploadsFolder = Path.Combine(
+                    Directory.GetCurrentDirectory(),
+                    "wwwroot",
+                    "uploads"
+                );
+                Directory.CreateDirectory(uploadsFolder);
+
+                // Give the gift image file a unique name
+                var uniqueFileName = $"{Guid.NewGuid()}_{giftImage.FileName}";
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                // Write buffered file to server
+                await System.IO.File.WriteAllBytesAsync(filePath, ms.ToArray());
+
+                // Update path for database and views
+                gift.GiftImagePath = $"/uploads/{uniqueFileName}";
+            }
 
             // Save gift to the database
             _context.Add(gift);
@@ -140,8 +168,8 @@ namespace WeddingApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(
             int id,
-            // Bind only allowed properties
-            [Bind("GiftId,Name,Description,Link,Price,ImageUrl")] Gift updatedGift
+            [Bind("GiftId,Name,Description,Link,Price,ImagePath")] Gift updatedGift,
+            IFormFile? giftImage
         )
         {
             if (id != updatedGift.GiftId)
@@ -165,10 +193,34 @@ namespace WeddingApp.Controllers
                 gift.Description = updatedGift.Description;
                 gift.Link = updatedGift.Link;
                 gift.Price = updatedGift.Price;
-                gift.ImageUrl = updatedGift.ImageUrl;
+
+                // Handle optional new image
+                if (giftImage != null && giftImage.Length > 0)
+                {
+                    // Buffer file in memory
+                    using var ms = new MemoryStream();
+                    await giftImage.CopyToAsync(ms);
+
+                    // Create uploads folder if it does not exist
+                    var uploadsFolder = Path.Combine(
+                        Directory.GetCurrentDirectory(),
+                        "wwwroot",
+                        "uploads"
+                    );
+                    Directory.CreateDirectory(uploadsFolder);
+
+                    // Give the gift image file a unique name
+                    var uniqueFileName = $"{Guid.NewGuid()}_{giftImage.FileName}";
+                    var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                    // Write buffered file to server
+                    await System.IO.File.WriteAllBytesAsync(filePath, ms.ToArray());
+
+                    // Update path for database and views
+                    gift.GiftImagePath = $"/uploads/{uniqueFileName}";
+                }
 
                 await _context.SaveChangesAsync();
-
                 return RedirectToAction(nameof(Index));
             }
 
