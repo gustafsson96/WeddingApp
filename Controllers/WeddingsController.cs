@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -83,15 +85,14 @@ namespace WeddingApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
             [Bind("FirstPerson,SecondPerson,Date,Time,Venue,City,AdditionalInfo,HeaderImagePath")]
-                Wedding wedding
+                Wedding wedding,
+            IFormFile? headerImage
         )
         {
             if (ModelState.IsValid)
             {
                 // Get logged in user
                 var user = await _userManager.GetUserAsync(User);
-
-                // Link wedding to user
                 wedding.UserId = user.Id;
 
                 // Generate unique slug
@@ -99,6 +100,32 @@ namespace WeddingApp.Controllers
                     wedding.FirstPerson,
                     wedding.SecondPerson
                 );
+
+                // Handle uploaded header file
+                if (headerImage != null && headerImage.Length > 0)
+                {
+                    // Buffer file in memory
+                    using var memoryStream = new MemoryStream();
+                    await headerImage.CopyToAsync(memoryStream);
+
+                    // Create uploads folder if it does not exist
+                    var uploadsFolder = Path.Combine(
+                        Directory.GetCurrentDirectory(),
+                        "wwwroot",
+                        "uploads"
+                    );
+                    Directory.CreateDirectory(uploadsFolder);
+
+                    // Give the header file a unique name
+                    var uniqueFileName = $"{Guid.NewGuid()}_{headerImage.FileName}";
+                    var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                    // Write buffered file to server
+                    await System.IO.File.WriteAllBytesAsync(filePath, memoryStream.ToArray());
+
+                    // Image path stored in database and used to display in views
+                    wedding.HeaderImagePath = $"/uploads/{uniqueFileName}";
+                }
 
                 // Add to database
                 _context.Add(wedding);
@@ -143,7 +170,8 @@ namespace WeddingApp.Controllers
             [Bind(
                 "WeddingId,FirstPerson,SecondPerson,Date,Time,Venue,City,AdditionalInfo,HeaderImagePath"
             )]
-                Wedding updatedWedding
+                Wedding updatedWedding,
+            IFormFile? headerImage
         )
         {
             // Check that id match for original and updated wedding
@@ -176,10 +204,35 @@ namespace WeddingApp.Controllers
                 wedding.Venue = updatedWedding.Venue;
                 wedding.City = updatedWedding.City;
                 wedding.AdditionalInfo = updatedWedding.AdditionalInfo;
-                wedding.HeaderImagePath = updatedWedding.HeaderImagePath;
 
+                // Handle uploaded header image
+                if (headerImage != null && headerImage.Length > 0)
+                {
+                    // Buffer file in memory
+                    using var memoryStream = new MemoryStream();
+                    await headerImage.CopyToAsync(memoryStream);
+
+                    // Create uploads folder if it does not exist
+                    var uploadsFolder = Path.Combine(
+                        Directory.GetCurrentDirectory(),
+                        "wwwroot",
+                        "uploads"
+                    );
+                    Directory.CreateDirectory(uploadsFolder);
+
+                    // Give the header file a unique name
+                    var uniqueFileName = $"{Guid.NewGuid()}_{headerImage.FileName}";
+                    var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                    // Write buffered file to server
+                    await System.IO.File.WriteAllBytesAsync(filePath, memoryStream.ToArray());
+
+                    // Update path for database and views
+                    wedding.HeaderImagePath = $"/uploads/{uniqueFileName}";
+                }
+
+                // Redirect to dashboard after saving
                 await _context.SaveChangesAsync();
-
                 return RedirectToAction(nameof(Index));
             }
 
