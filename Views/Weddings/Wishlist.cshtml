@@ -1,20 +1,58 @@
 @model WeddingApp.Models.Wedding
 
+@section Styles {
+    <link rel="stylesheet" href="~/css/wishlist.css" />
+}
+
 <h2>@Model.FirstPerson & @Model.SecondPerson's Wishlist</h2>
 
-<ul id="giftList">
-@foreach(var gift in Model.Gifts)
+<ul id="giftList" class="gift-list">
+@foreach (var gift in Model.Gifts)
 {
-    <li data-giftid="@gift.GiftId">
-        @gift.Name
-        @if (gift.IsReserved)
-        {
-            <span>Reserved</span>
-        }
-        else
-        {
-            <button class="reserveBtn">Reserve</button>
-        }
+    <li class="gift-card @(gift.IsReserved ? "reserved" : "")" data-giftid="@gift.GiftId">
+
+        <!-- Gift Image -->
+        <div class="gift-image">
+            <img src="@(string.IsNullOrEmpty(gift.GiftImagePath) 
+                        ? "/images/gift-placeholder.png" 
+                        : gift.GiftImagePath)" 
+                 alt="@gift.Name" />
+        </div>
+
+        <!-- Gift Info -->
+        <div class="gift-info">
+            <h3>@gift.Name</h3>
+
+            @if (!string.IsNullOrEmpty(gift.Description))
+            {
+                <p>@gift.Description</p>
+            }
+
+            @if (gift.Price.HasValue)
+            {
+                <p><strong>Price:</strong> @gift.Price.Value.ToString("C")</p>
+            }
+
+            @if (!string.IsNullOrEmpty(gift.Link))
+            {
+                <p>
+                    <a href="@gift.Link" target="_blank" rel="noopener">
+                        View product
+                    </a>
+                </p>
+            }
+
+            <!-- Reservation section -->
+            @if (gift.IsReserved)
+            {
+                <span class="reserved-label">Reserved</span>
+            }
+            else
+            {
+                <button class="reserveBtn">Reserve</button>
+            }
+        </div>
+
     </li>
 }
 </ul>
@@ -35,8 +73,13 @@ document.querySelectorAll('.reserveBtn').forEach(btn => {
             body: JSON.stringify({ giftId: giftId, slug: slug })
         });
 
-        if (res.ok) {
-            li.innerHTML = '<span>Reserved</span>';
+if (res.ok) {
+    btn.replaceWith(
+        Object.assign(document.createElement("span"), {
+            textContent: "Reserved",
+            className: "reserved-label"
+        })
+    );
         } else {
             alert('Could not reserve gift.');
         }
