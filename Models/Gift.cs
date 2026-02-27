@@ -10,7 +10,7 @@ namespace WeddingApp.Models
         public string? Link { get; set; }
         public decimal? Price { get; set; }
         public bool IsReserved { get; set; }
-        public string? ImageUrl { get; set; }
+        public string? GiftImagePath { get; set; }
 
         // Navigation property
         public Wedding? Wedding { get; set; }
