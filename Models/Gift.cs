@@ -13,6 +13,6 @@ namespace WeddingApp.Models
         public string? ImageUrl { get; set; }
 
         // Navigation property
-        public Wedding Wedding { get; set; } = null!;
+        public Wedding? Wedding { get; set; }
     }
 }
