@@ -4,6 +4,6 @@ namespace WeddingApp.Models
     public class ReserveRequest
     {
         public int GiftId { get; set; }
-        public string Slug { get; set; }
+        public string? Slug { get; set; }
     }
 }
