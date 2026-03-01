@@ -1,0 +1,38 @@
+@model WeddingApp.Models.Guest
+
+@{
+    ViewData["Title"] = "RSVP";
+}
+
+<h1>@Model.Name, you're invited to join the celebration!</h1>
+<p>RSVP here:</p>
+
+<form asp-action="RSVPForm" method="post">
+    <input type="hidden" asp-for="GuestId" />
+
+    <div class="form-group">
+        <label>Will you attend?</label><br />
+        <input type="radio" asp-for="Attending" value="true" /> Yes
+        <input type="radio" asp-for="Attending" value="false" /> No
+    </div>
+    <label>Meal choice</label>
+@Html.DropDownListFor(
+    m => m.FoodPref,
+    new List<SelectListItem> {
+        new SelectListItem { Text = "Meat", Value = "Meat" },
+        new SelectListItem { Text = "Vegetarian", Value = "Vegetarian" }
+    },
+    "Select..."
+)
+    <div class="form-group">
+        <label asp-for="Allergies">Food allergies</label>
+        <input class="form-control" asp-for="Allergies" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Message">Anything else you'd like to tell us?</label>
+        <textarea class="form-control" asp-for="Message"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit RSVP</button>
+</form>
