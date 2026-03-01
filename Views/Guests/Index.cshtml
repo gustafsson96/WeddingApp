@@ -9,6 +9,12 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Message"]
+    </div>
+}
 <table class="table">
     <thead>
         <tr>
@@ -76,8 +82,16 @@
                 <a asp-action="Edit" asp-route-id="@item.GuestId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.GuestId">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.GuestId">Delete</a>
+                    <form asp-action="SendInvitation" method="post" style="display:inline;">
+        <input type="hidden" name="id" value="@item.GuestId" />
+        <button type="submit" class="btn btn-sm btn-success">Send Invitation</button>
+    </form>
             </td>
         </tr>
+        
 }
     </tbody>
 </table>
+<form asp-action="SendInvitations" method="post">
+    <button type="submit" class="btn btn-primary mb-3">Send Invitations to All</button>
+</form>

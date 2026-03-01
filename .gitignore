@@ -28,3 +28,6 @@ appsettings.Development.json
 # NuGet
 *.nupkg
 packages/
+
+# .env
+.env
