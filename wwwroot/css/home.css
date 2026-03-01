@@ -1,0 +1,40 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.hero {
+    width: 100%;
+    height: 80vh;
+    background: url('/images/hero-image.png') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin: 0;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(70, 62, 35, 0.4);
+}
+
+.hero-content {
+    position: relative;
+    color: white;
+    text-align: center;
+    z-index: 2;
+    padding: 0 2rem;
+}
+
+.hero h1 {
+    font-size: 3em;
+    font-style: italic;
+}
+
+.home-container {
+    margin-bottom: 10em;
+}

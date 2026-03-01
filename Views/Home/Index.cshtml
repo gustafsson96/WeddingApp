@@ -1,11 +1,21 @@
 ﻿@model IEnumerable<WeddingApp.Models.Wedding>
+@section Styles {
+    <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+}
 
 @{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Find a Wedding</h1>
+<section class="hero">
+    <div class="hero-content">
+        <h1>Ever After</h1>
+        <p>Let's create your wedding site!</p>
+    </div>
+</section>
+
+<div class="home-container text-center mx-5">
+    <h2 class="display-4">Find a Wedding</h2>
     <p>Search for the wedding couple's names to find your event.</p>
 
     <!-- Search form -->
@@ -13,6 +23,7 @@
         <input type="text" name="query" placeholder="Search by name..." />
         <button type="submit">Search</button>
     </form>
+    </div>
 
     <!-- Show results if model exists -->
     @if (Model != null)
