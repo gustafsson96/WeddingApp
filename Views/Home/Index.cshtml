@@ -1,8 +1,50 @@
-﻿@{
+﻿@model IEnumerable<WeddingApp.Models.Wedding>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Find a Wedding</h1>
+    <p>Search for the wedding couple's names to find your event.</p>
+
+    <!-- Search form -->
+    <form asp-controller="Home" asp-action="Search" method="get">
+        <input type="text" name="query" placeholder="Search by name..." />
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- Show results if model exists -->
+    @if (Model != null)
+    {
+        <div class="search-results mt-4">
+            <h3>Search results for "@ViewBag.SearchQuery"</h3>
+
+            @if (!Model.Any())
+            {
+                <p>No weddings found.</p>
+            }
+            else
+            {
+                <ul>
+                    @foreach (var wedding in Model)
+                    {
+                        <li>
+                            <a asp-controller="Weddings"
+                               asp-action="Public"
+                               asp-route-slug="@wedding.PublicSlug"
+                               target="_blank"
+                               rel="noopener">
+                                @wedding.FirstPerson & @wedding.SecondPerson
+                            </a>
+                            <br />
+                            <small>
+                                @wedding.Date.ToShortDateString() - @wedding.City
+                            </small>
+                        </li>
+                    }
+                </ul>
+            }
+        </div>
+    }
 </div>

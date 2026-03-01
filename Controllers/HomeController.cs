@@ -48,7 +48,8 @@ public class HomeController : Controller
             .ToListAsync();
 
         // Return results
-        return View("SearchResults", weddings);
+        ViewBag.SearchQuery = query;
+        return View("Index", weddings);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
