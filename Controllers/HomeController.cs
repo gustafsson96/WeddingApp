@@ -26,6 +26,31 @@ public class HomeController : Controller
         return View();
     }
 
+    // Public wedding search from home page
+    [HttpGet]
+    public async Task<IActionResult> Search(string query)
+    {
+        // Prevent empty saerch queries
+        if (string.IsNullOrWhiteSpace(query))
+        {
+            return View("Index");
+        }
+
+        // Remove whitespace
+        query = query.Trim();
+
+        // Search for weddings based on couple name
+        var weddings = await _context
+            .Weddings.Where(w =>
+                EF.Functions.Like(w.FirstPerson, $"%{query}%")
+                || EF.Functions.Like(w.SecondPerson, $"%{query}%")
+            )
+            .ToListAsync();
+
+        // Return results
+        return View("SearchResults", weddings);
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
