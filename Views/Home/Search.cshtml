@@ -1,10 +1,16 @@
 @model IEnumerable<WeddingApp.Models.Wedding>
-<div class="home-container text-center mx-5">
-    <h2 class="display-4">Find a Wedding</h2>
+@section Styles {
+    <link rel="stylesheet" href="~/css/search.css" asp-append-version="true" />
+}
+
+<div class="search-page">
+
+    <div class="search-header">
+    <h2>Find a Wedding</h2>
     <p>Search for the wedding couple's names to find your event.</p>
 
     <!-- Search form -->
-    <form asp-controller="Home" asp-action="Search" method="get">
+    <form asp-controller="Home" asp-action="Search" method="get" class="search-form">
         <input type="text" name="query" placeholder="Search by name..." />
         <button type="submit">Search</button>
     </form>
@@ -13,34 +19,35 @@
     <!-- Show results if model exists -->
     @if (Model != null)
     {
-        <div class="search-results mt-4">
+        <div class="search-results">
             <h3>Search results for "@ViewBag.SearchQuery"</h3>
 
             @if (!Model.Any())
             {
-                <p>No weddings found.</p>
+                <p class="no-results">No weddings found.</p>
             }
             else
             {
-                <ul>
+                <div class="wedding-grid">
                     @foreach (var wedding in Model)
                     {
-                        <li>
+                        <div class="wedding-card">
+                            <h4>@wedding.FirstPerson & @wedding.SecondPerson</h4>
+                            <p>@wedding.Date.ToShortDateString()</p>
+                            <p>@wedding.City</p>
+
                             <a asp-controller="Weddings"
                                asp-action="Public"
                                asp-route-slug="@wedding.PublicSlug"
-                               target="_blank"
-                               rel="noopener">
-                                @wedding.FirstPerson & @wedding.SecondPerson
+                               class="view-btn"
+                               target="_blank">
+                                View Wedding
                             </a>
-                            <br />
-                            <small>
-                                @wedding.Date.ToShortDateString() - @wedding.City
-                            </small>
-                        </li>
+                        </div>
                     }
-                </ul>
+                </div>
             }
         </div>
     }
+
 </div>
