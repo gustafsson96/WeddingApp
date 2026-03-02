@@ -33,7 +33,7 @@ public class HomeController : Controller
         // Prevent empty saerch queries
         if (string.IsNullOrWhiteSpace(query))
         {
-            return View("Index");
+            return View();
         }
 
         // Remove whitespace
@@ -49,7 +49,7 @@ public class HomeController : Controller
 
         // Return results
         ViewBag.SearchQuery = query;
-        return View("Index", weddings);
+        return View(weddings);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

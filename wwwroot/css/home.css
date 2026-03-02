@@ -38,3 +38,41 @@ html, body {
 .home-container {
     margin-bottom: 10em;
 }
+
+.hero-buttons {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Home page buttons */
+.hero-btn {
+    padding: 0.8em 1.8em;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    font-size: 1em;
+}
+
+.hero-btn.primary {
+    background-color: #9caf9c;
+    color: white;
+}
+
+.hero-btn.primary:hover {
+    background-color: #7f997f;
+}
+
+.hero-btn.secondary {
+    background-color: white;
+    color: #463e23;
+    border: 2px solid white;
+}
+
+.hero-btn.secondary:hover {
+    background-color: transparent;
+    color: white;
+}

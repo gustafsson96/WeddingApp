@@ -11,51 +11,20 @@
     <div class="hero-content">
         <h1>Ever After</h1>
         <p>Let's create your wedding site!</p>
+
+        <div class="hero-buttons">
+            <a asp-area="Identity"
+               asp-page="/Account/Register" 
+               class="hero-btn primary">
+                Get Started
+            </a>
+
+            <a asp-controller="Home" 
+               asp-action="Search" 
+               class="hero-btn secondary">
+                Find a Wedding
+            </a>
+        </div>
     </div>
 </section>
 
-<div class="home-container text-center mx-5">
-    <h2 class="display-4">Find a Wedding</h2>
-    <p>Search for the wedding couple's names to find your event.</p>
-
-    <!-- Search form -->
-    <form asp-controller="Home" asp-action="Search" method="get">
-        <input type="text" name="query" placeholder="Search by name..." />
-        <button type="submit">Search</button>
-    </form>
-    </div>
-
-    <!-- Show results if model exists -->
-    @if (Model != null)
-    {
-        <div class="search-results mt-4">
-            <h3>Search results for "@ViewBag.SearchQuery"</h3>
-
-            @if (!Model.Any())
-            {
-                <p>No weddings found.</p>
-            }
-            else
-            {
-                <ul>
-                    @foreach (var wedding in Model)
-                    {
-                        <li>
-                            <a asp-controller="Weddings"
-                               asp-action="Public"
-                               asp-route-slug="@wedding.PublicSlug"
-                               target="_blank"
-                               rel="noopener">
-                                @wedding.FirstPerson & @wedding.SecondPerson
-                            </a>
-                            <br />
-                            <small>
-                                @wedding.Date.ToShortDateString() - @wedding.City
-                            </small>
-                        </li>
-                    }
-                </ul>
-            }
-        </div>
-    }
-</div>
