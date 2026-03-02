@@ -1,0 +1,90 @@
+/* Styling for logged in dashboard view */
+
+h1 {
+    text-align: center;
+    margin: 1em 0;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2em;
+    padding: 2em;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.dashboard-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 2em;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dashboard-card h3 {
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 0.5em;
+    color: #463e23;
+}
+
+.dashboard-card i {
+    color: #9caf9c;
+    font-size: 3em;
+    margin: 0.5em 0;
+}
+
+.dashboard-card p {
+    color: #555;
+    margin-bottom: 1em;
+}
+
+.dashboard-card .card-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    width: 100%;
+    align-items: center;
+}
+
+.dashboard-card a {
+    display: inline-block;
+    padding: 0.8em 1.8em;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1em;
+    transition: all 0.3s ease;
+    border: none;
+    width: fit-content;
+    text-align: center;
+}
+
+.dashboard-card a.btn-primary {
+    background-color: #9caf9c;
+    color: white;
+}
+
+.dashboard-card a.btn-primary:hover {
+    background-color: #7f997f;
+}
+
+.dashboard-card a.btn-secondary {
+    background-color: white;
+    color: #463e23;
+    border: 2px solid #463e23;
+}
+
+.dashboard-card a.btn-secondary:hover {
+    background-color: #fafafa;
+    color: #9caf9c;
+}
+
+/* Special styling for empty  */
+.dashboard-card.empty {
+    max-width: 400px;
+    margin: 2em auto;
+}

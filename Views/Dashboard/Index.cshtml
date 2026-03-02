@@ -14,7 +14,7 @@
 {
     <div class="dashboard-card">
         <h3>No wedding created yet</h3>
-        <a asp-controller="Weddings" asp-action="Create" class="btn-primary">
+        <a asp-controller="Weddings" asp-action="Create" class="btn btn-primary">
             Create Wedding
         </a>
     </div>
@@ -28,33 +28,35 @@ else
             <p>@Model.FirstPerson & @Model.SecondPerson</p>
             <p>@Model.Date.ToShortDateString()</p>
 
-            <a asp-controller="Weddings" asp-action="Edit" asp-route-id="@Model.WeddingId">
+            <a asp-controller="Weddings" asp-action="Edit" asp-route-id="@Model.WeddingId" class="btn btn-secondary">
                 Edit Wedding
             </a>
             <br />
-            <a href="/wedding/@Model.PublicSlug" target="_blank">
+            <a href="/wedding/@Model.PublicSlug" target="_blank" class="btn btn-primary">
                 View Public Page
             </a>
         </div>
 
         <div class="dashboard-card">
+            <i class="fas fa-users fa-3x"></i>
             <h3>Guests</h3>
-            <a asp-controller="Guests" asp-action="Index">
-                Manage Guests
+            <a asp-controller="Guests" asp-action="Index" class="btn btn-secondary">
+                Show Guests
             </a>
             <br />
-            <a asp-controller="Guests" asp-action="Create">
+            <a asp-controller="Guests" asp-action="Create" class="btn btn-primary">
                 Add Guest
             </a>
         </div>
 
         <div class="dashboard-card">
+            <i class="fas fa-gift fa-3x"></i>
             <h3>Wishlist</h3>
-            <a asp-controller="Gifts" asp-action="Index">
-                Manage Gifts
+            <a asp-controller="Gifts" asp-action="Index" class="btn btn-secondary">
+                Show Gifts
             </a>
             <br />
-            <a asp-controller="Gifts" asp-action="Create">
+            <a asp-controller="Gifts" asp-action="Create" class="btn btn-primary">
                 Add Gift
             </a>
         </div>
