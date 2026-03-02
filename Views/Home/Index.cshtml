@@ -1,5 +1,4 @@
-﻿@model IEnumerable<WeddingApp.Models.Wedding>
-@section Styles {
+﻿@section Styles {
     <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
 }
 
@@ -7,6 +6,7 @@
     ViewData["Title"] = "Home Page";
 }
 
+<!-- Hero section with CTA buttons -->
 <section class="hero">
     <div class="hero-content">
         <h1>Ever After</h1>
@@ -15,16 +15,79 @@
         <div class="hero-buttons">
             <a asp-area="Identity"
                asp-page="/Account/Register" 
-               class="hero-btn primary">
+               class="btn primary">
                 Get Started
             </a>
 
             <a asp-controller="Home" 
                asp-action="Search" 
-               class="hero-btn secondary">
+               class="btn secondary">
                 Find a Wedding
             </a>
         </div>
     </div>
 </section>
+
+
+<!-- Information section-->
+<section class="info-section">
+    <div class="container">
+        <h2>How it Works</h2>
+        <p>Create your wedding site in three simple steps.</p>
+
+        <div class="steps">
+            <div class="step-card">
+                <i class="fas fa-heart fa-3x"></i>
+                <h3>Create</h3>
+                <p>Sign up and build your personalized wedding page quickly and easily.</p>
+            </div>
+
+            <div class="step-card">
+                <i class="fas fa-users fa-3x"></i>
+                <h3>Manage Guests</h3>
+                <p>Add your guest list, track RSVPs, and stay organized throughout the planning.</p>
+            </div>
+
+            <div class="step-card">
+                <i class="fas fa-gift fa-3x"></i>
+                <h3>Share</h3>
+                <p>Send invitations and share your wishlist with family and friends.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Guest list information section -->
+<section class="guestlist-section">
+    <div class="container">
+        <h2>Organize Your Guests</h2>
+        <p>Keep track of your wedding guests and RSVPs easily.</p>
+        <a asp-area="Identity" asp-page="/Account/Register" class="btn primary">
+            Start Your Guest List
+        </a>
+    </div>
+</section>
+
+<!-- Wishlist information section -->
+<section class="wishlist-section">
+    <div class="container">
+        <h2>Create Your Wishlist</h2>
+        <p>Let your guests know what gifts you would love to receive.</p>
+        <a asp-area="Identity" asp-page="/Account/Register" class="btn primary">
+            Create Wishlist
+        </a>
+    </div>
+</section>
+
+<!-- Contact section -->
+<section class="contact-section">
+    <div class="container">
+        <h2>Contact Us</h2>
+        <p>Have questions? Send us a message!</p>
+        <a asp-controller="Home" asp-action="Contact" class="btn primary">
+            Contact
+        </a>
+    </div>
+</section>
+
 

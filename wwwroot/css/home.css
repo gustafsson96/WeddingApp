@@ -2,8 +2,10 @@ html, body {
     margin: 0;
     padding: 0;
     width: 100%;
+    font-family: 'Inter', sans-serif;
 }
 
+/* Hero section */
 .hero {
     width: 100%;
     height: 80vh;
@@ -27,7 +29,7 @@ html, body {
     color: white;
     text-align: center;
     z-index: 2;
-    padding: 0 2rem;
+    padding: 0 2em;
 }
 
 .hero h1 {
@@ -40,15 +42,117 @@ html, body {
 }
 
 .hero-buttons {
-    margin-top: 2rem;
+    margin-top: 2em;
     display: flex;
-    gap: 1rem;
+    gap: 1em;
     justify-content: center;
     flex-wrap: wrap;
 }
 
-/* Home page buttons */
-.hero-btn {
+/* How it works info section */
+.info-section {
+    background-color: #f8f6f2;
+    text-align: center;
+    padding: 6em 2em;
+}
+
+.info-section h2 {
+    font-size: 2.8em;
+}
+
+.info-section p {
+    color: #555;
+    margin-bottom: 3em;
+}
+
+.info-section .steps {
+    display: flex;
+    gap: 2em;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 2em;
+}
+
+.step-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 2em;
+    max-width: 280px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.step-card i {
+    color: #9caf9c;
+    margin-bottom: 1em;
+}
+
+.step-card h3 {
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 1em;
+}
+
+.step-card p {
+    font-size: 0.95em;
+    color: #555;
+}
+
+/* Guestlist Section */
+.guestlist-section {
+    background-color: #fff;
+    text-align: center;
+    padding: 6em 2em;
+}
+
+.guestlist-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5em;
+    margin-bottom: 0.5em;
+}
+
+.guestlist-section p {
+    color: #555;
+    margin-bottom: 2em;
+}
+
+/* Wishlist Section */
+.wishlist-section {
+    background-color: #e8ede8;
+    text-align: center;
+    padding: 6em 2em;
+}
+
+.wishlist-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5em;
+    margin-bottom: 0.5em;
+}
+
+.wishlist-section p {
+    color: #555;
+    margin-bottom: 2em;
+}
+
+/* Contact info section */
+.contact-section {
+    background-color: #fff;
+    text-align: center;
+    padding: 6em 2em;
+}
+
+.contact-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5em;
+    margin-bottom: 0.5em;
+}
+
+.contact-section p {
+    color: #555;
+    margin-bottom: 2em;
+}
+
+/* Buttons */
+.btn {
     padding: 0.8em 1.8em;
     border-radius: 30px;
     text-decoration: none;
@@ -57,22 +161,34 @@ html, body {
     font-size: 1em;
 }
 
-.hero-btn.primary {
+.btn.primary {
     background-color: #9caf9c;
     color: white;
 }
 
-.hero-btn.primary:hover {
+.btn.primary:hover {
     background-color: #7f997f;
 }
 
-.hero-btn.secondary {
+.btn.secondary {
     background-color: white;
     color: #463e23;
     border: 2px solid white;
 }
 
-.hero-btn.secondary:hover {
+.btn.secondary:hover {
     background-color: transparent;
     color: white;
+}
+
+/* Media query for screens smaller than 768px */
+@media (max-width: 768px) {
+    .info-section .steps {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .step-card {
+        max-width: 90%;
+    }
 }
