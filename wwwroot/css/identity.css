@@ -1,0 +1,87 @@
+/* Login, signup and forgot password styling (Identity forms) */
+
+body, input, button, select, textarea {
+    font-family: 'Inter', sans-serif;
+    background-color: #f4ede4; 
+    margin: 0;
+    padding: 0;
+}
+
+/* Form styling */
+.form-card {
+    max-width: 450px;
+    margin: 5em auto;
+    padding: 2.5em;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.form-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2em;
+    font-weight: 700;
+    margin-bottom: 0.5em;
+    text-align: center;
+}
+
+.description {
+    text-align: center;
+}
+
+.form-card p {
+    font-size: 0.95em;
+    color: #555;
+}
+
+.form-card .form-control {
+    border-radius: 8px;
+    padding: 0.9em 1em;
+    border: 1px solid #ccc;
+    font-size: 0.95em;
+}
+
+.form-card .form-floating label {
+    font-size: 0.9em;
+    color: #555;
+}
+
+.btn {
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1em;
+    padding: 0.9em 1em;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.btn.primary {
+    background: #7f997f;
+    color: #fff;
+    border: none;
+}
+
+.btn.primary:hover {
+    background: #9caf9c;
+}
+
+/* Links */
+.form-card .form-links p {
+    margin: 0.5em 0;
+    text-align: left;
+}
+
+.form-card .form-links a {
+    color: #333;
+    text-decoration: underline;
+    font-weight: 400;
+}
+
+.form-card .form-links a:hover {
+    text-decoration: underline;
+}
+
+.form-card .form-check {
+    text-align: left;
+    margin-bottom: 1.5em;
+}
