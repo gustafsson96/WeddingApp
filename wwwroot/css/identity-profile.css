@@ -1,0 +1,71 @@
+/* Styling for manage profile view (logged in Identity views) */
+
+/* Style sidebar for "Manage your account" using defauly identity classes */
+.nav-pills {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.nav-pills .nav-link {
+    border-radius: 8px;
+    padding: 0.9em 1em;
+    font-weight: 500;
+    font-size: 1em;
+    color: #333;
+    transition: background 0.3s, color 0.3s;
+    display: block;
+    text-align: left;
+}
+
+.nav-pills .nav-link:hover {
+    background-color: #e2f0e2;
+    color: #000;
+}
+
+.nav-pills .nav-link.active {
+    background-color: #7f997f; 
+    color: #fff;
+}
+
+.nav-pills .nav-link.delete-account {
+    background-color: #f26b6b; 
+    color: #fff;
+}
+
+.nav-pills .nav-link.delete-account:hover {
+    background-color: #ff8080;
+    color: #fff;
+}
+
+/* Other buttons */
+.btn {
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1em;
+    padding: 0.9em 1em;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.btn-primary {
+    background: #7f997f;
+    color: #fff;
+    border: none;
+}
+
+.btn-primary:hover {
+    background: #9caf9c;
+}
+
+#delete {
+    background-color: #d6312e;
+    color: #fff;
+    padding: 0.3em 1em;
+}
+
+#delete:hover {
+    background-color: #a94442;
+}
+
+
