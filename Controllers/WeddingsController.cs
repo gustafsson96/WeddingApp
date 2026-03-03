@@ -73,8 +73,15 @@ namespace WeddingApp.Controllers
         }
 
         // GET: Weddings/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var user = await _userManager.GetUserAsync(User);
+            bool hasWedding = await _context.Weddings.AnyAsync(w => w.UserId == user.Id);
+            if (hasWedding)
+            {
+                // Redirect to dashboard if user already has a wedding
+                return RedirectToAction("Index", "Weddings");
+            }
             return View();
         }
 
@@ -89,10 +96,18 @@ namespace WeddingApp.Controllers
             IFormFile? headerImage
         )
         {
+            // Get logged in user
+            var user = await _userManager.GetUserAsync(User);
+
+            bool hasWedding = await _context.Weddings.AnyAsync(w => w.UserId == user.Id);
+            if (hasWedding)
+            {
+                ModelState.AddModelError("", "You can only have one active wedding.");
+                return View(wedding);
+            }
+
             if (ModelState.IsValid)
             {
-                // Get logged in user
-                var user = await _userManager.GetUserAsync(User);
                 wedding.UserId = user.Id;
 
                 // Generate unique slug

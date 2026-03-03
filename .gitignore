@@ -31,3 +31,6 @@ packages/
 
 # .env
 .env
+
+# uploads
+wwwroot/uploads/
