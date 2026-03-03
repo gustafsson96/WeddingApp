@@ -1,4 +1,4 @@
-/* Styling for edit wedding view */
+/* Styling for create and edit wedding views */
 
 .form-card .form-group {
     margin-bottom: 0.8em;
@@ -84,7 +84,7 @@ textarea.form-control {
     color: #7f997f;
 }
 
-/* Styling if no header image is uploaded */
+/* Styling for edit if no header image is uploaded */
 .no-image {
     font-style: italic;
     color: #999;

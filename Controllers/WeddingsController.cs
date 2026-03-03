@@ -80,7 +80,7 @@ namespace WeddingApp.Controllers
             if (hasWedding)
             {
                 // Redirect to dashboard if user already has a wedding
-                return RedirectToAction("Index", "Weddings");
+                return RedirectToAction("Index", "Dashboard");
             }
             return View();
         }
@@ -147,7 +147,7 @@ namespace WeddingApp.Controllers
                 await _context.SaveChangesAsync();
 
                 // Redirect to dashboard after POST
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Dashboard");
             }
             return View(wedding);
         }
