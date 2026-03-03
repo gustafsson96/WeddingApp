@@ -68,10 +68,10 @@
                             Remove image
                     </button>
                 </div>
-                                <div class="form-group">
-                <label class="control-label">Change Header Image</label>
-          <input type="file" name="headerImage" class="form-control" />
-          </div>
+                <div class="form-group">
+                    <label class="control-label">Change Header Image</label>
+                    <input type="file" name="headerImage" class="form-control" />
+                </div>
                 }
                 else
                 {
@@ -83,16 +83,22 @@
                     <input type="file" name="headerImage" class="form-control" />
                 </div>
                 }
-            <div class="form-group">
+            <div class="form-group form-buttons">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
+        <div>
+            <a asp-controller="Dashboard" asp-action="Index" class="btn btn-secondary">Back to Dashboard</a>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
-</div>
+<form asp-action="Delete" method="post" asp-controller="Weddings" asp-route-id="@Model.WeddingId">
+    @Html.AntiForgeryToken()
+    <button type="submit" class="remove-wedding-btn"
+            onclick="return confirm('Are you sure you want to delete this wedding?');">
+       <i class="fas fa-trash-alt trash-icon"></i> Delete Wedding
+    </button>
+</form>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

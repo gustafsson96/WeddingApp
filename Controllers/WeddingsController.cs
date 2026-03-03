@@ -315,11 +315,27 @@ namespace WeddingApp.Controllers
                 return Forbid();
             }
 
+            // Delete header image from server if wedding is deleted
+            if (!string.IsNullOrEmpty(wedding.HeaderImagePath))
+            {
+                var filePath = Path.Combine(
+                    Directory.GetCurrentDirectory(),
+                    "wwwroot",
+                    wedding.HeaderImagePath.TrimStart('/')
+                );
+
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+            }
+
+            // Remove wedding from database
             _context.Weddings.Remove(wedding);
             await _context.SaveChangesAsync();
 
             // Redirect to dashboard after delete
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Dashboard");
         }
 
         // Create slug based on names of wedding couple

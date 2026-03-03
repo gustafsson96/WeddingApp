@@ -1,3 +1,5 @@
+/* Styling for edit wedding view */
+
 .form-card .form-group {
     margin-bottom: 0.8em;
     display: flex;
@@ -25,6 +27,7 @@ textarea.form-control {
     max-width: 100%;
     border-radius: 12px;
 }
+
 
 /* Buttons */
 .btn-primary {
@@ -66,6 +69,21 @@ textarea.form-control {
     color: #7f997f;
 }
 
+.remove-wedding-btn {
+    background: none;
+    border: none;
+    color: #a94442;
+    font-size: 1em;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+    margin-top: 3em;
+}
+
+.remove-wedding-btn:hover {
+    color: #7f997f;
+}
+
 /* Styling if no header image is uploaded */
 .no-image {
     font-style: italic;
@@ -76,4 +94,8 @@ textarea.form-control {
     border-radius: 12px;
     background-color: #fafafa;
     margin-bottom: 0.8em;
+}
+
+.trash-icon {
+    margin-right: 0.5em;
 }
