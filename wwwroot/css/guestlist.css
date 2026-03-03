@@ -1,0 +1,150 @@
+/* Styling for guestlist */
+
+.guestlist-section {
+    background-color: #fff;
+    text-align: center;
+    padding: 4em 2em;
+    font-family: 'Inter', sans-serif;
+}
+
+.guestlist-section h2.section-title {
+    font-size: 2em;
+    margin-bottom: 1em;
+}
+
+.guestlist-section p.empty-message {
+    color: #555;
+    font-size: 1em;
+    margin-top: 2em;
+}
+
+/* Tables */
+.guest-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2em;
+}
+
+.guest-table th, .guest-table td {
+    padding: 0.8em 1em;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+    font-size: 0.95em;
+}
+
+.guest-table th {
+    font-weight: 600;
+    color: #463e23;
+}
+
+/* Send RSVP form button */
+.inline-form {
+    display: inline;
+    margin: 0;
+}
+
+.guest-table .btn-sm {
+    padding: 0.35em 0.7em;
+    font-size: 0.85em;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+/* Primary button */
+.btn-primary {
+    background-color: #7f997f;
+    color: white;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #9caf9c;
+}
+
+/* Other buttons */
+.bulk-invite-btn {
+    padding: 0.8em 1.5em;
+    margin-top: 1em;
+}
+
+/* Edit and delete links */
+.action-links a {
+    margin: 0 0.3em;
+    color: #463e23;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.action-links a:hover {
+    text-decoration: underline;
+}
+
+/* Filter tabs */
+.filter-tabs {
+    display: flex;
+    gap: 1em;
+    justify-content: center;
+    margin-bottom: 2em;
+    flex-wrap: wrap;
+}
+
+.filter-tab {
+    text-decoration: none;
+    padding: 0.5em 1.2em;
+    border-radius: 20px;
+    background-color: #f4f4f0;
+    color: #463e23;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.filter-tab.active {
+    background-color: #7f997f;
+    color: white;
+}
+
+.filter-tab:hover {
+    background-color: #9caf9c;
+    color: white;
+}
+
+.sent-badge {
+    display: inline-block;
+    background-color: #e0e0e0;
+    color: #555;
+    font-weight: 600;
+    padding: 0.3em 0.6em;
+    border-radius: 12px;
+    font-size: 0.85em;
+}
+
+.status {
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+}
+
+.status.not-sent {
+    background-color: #f5c97b; 
+}
+
+.status.pending {
+    background-color: #9caf9c; 
+    color: white;
+}
+
+.status.responded {
+    background-color: #7f997f;
+    color: white;
+}
+
+/* Media query for screens smaller than 768px */
+@media (max-width: 768px) {
+    .guest-table th, .guest-table td {
+        font-size: 0.9em;
+    }
+
+    .filter-tabs {
+        flex-direction: column;
+        align-items: center;
+    }
+}

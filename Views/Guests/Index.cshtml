@@ -1,97 +1,221 @@
 @model IEnumerable<WeddingApp.Models.Guest>
 
-@{
-    ViewData["Title"] = "Index";
+@section Styles {
+    <link rel="stylesheet" href="~/css/guestlist.css" asp-append-version="true" />
 }
 
-<h1>Index</h1>
+@{
+    ViewData["Title"] = "Guest List";
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+    var currentFilter = ViewBag.CurrentFilter as string ?? "invited";
+
+    // Different filter options
+    var invitedGuests = Model.Where(g => g.RSVPTime == null && g.InvitationSentAt != null).ToList();
+    var respondedGuests = Model.Where(g => g.RSVPTime != null).ToList();
+    var guestsNotSent = Model.Where(g => g.InvitationSentAt == null).ToList();
+}
+
+@if (!Model.Any())
+{
+    <div class="empty-state">
+        <h2>No guests added yet</h2>
+        <p>Start by adding your first guest to send invitations.</p>
+        <a asp-action="Create" class="btn btn-primary">
+            Add First Guest
+        </a>
+    </div>
+
+    return;
+}
+
+<h1 class="page-title">Guest List</h1>
+
+<!-- Add new guest button -->
+<div class="top-actions">
+    <a asp-action="Create" class="btn btn-primary">Add New Guest</a>
+</div>
+
+<!-- Tabs for filtering -->
+<div class="filter-tabs">
+    <a asp-action="Index" asp-route-filter="all"
+       class="filter-tab @(currentFilter == "all" ? "active" : "")">
+        All Guests
+    </a>
+
+    <a asp-action="Index" asp-route-filter="invited"
+       class="filter-tab @(currentFilter == "invited" ? "active" : "")">
+        Invited
+    </a>
+
+    <a asp-action="Index" asp-route-filter="responded"
+       class="filter-tab @(currentFilter == "responded" ? "active" : "")">
+        Responded
+    </a>
+</div>
+
 @if (TempData["Message"] != null)
 {
-    <div class="alert alert-success">
+    <div class="alert alert-success custom-alert">
         @TempData["Message"]
     </div>
 }
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Attending)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RSVPTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FoodPref)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Allergies)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Message)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RSVPToken)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.InvitationSentAt)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Attending)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RSVPTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FoodPref)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Allergies)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Message)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RSVPToken)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.InvitationSentAt)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.GuestId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.GuestId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.GuestId">Delete</a>
-                    <form asp-action="SendInvitation" method="post" style="display:inline;">
-        <input type="hidden" name="id" value="@item.GuestId" />
-        <button type="submit" class="btn btn-sm btn-success">Send Invitation</button>
-    </form>
-            </td>
-        </tr>
-        
+
+<!-- Filter option to show all created guests -->
+@if (currentFilter == "all")
+{
+    <div class="guest-section">
+        <h2 class="section-title">All Guests</h2>
+
+        @if (Model.Any())
+        {
+            <table class="guest-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var guest in Model)
+                    {
+                        <tr>
+                            <td>@guest.Name</td>
+                            <td>@guest.Email</td>
+                            <td>
+                                @if (guest.RSVPTime == null)
+                                {
+                                    if (guest.InvitationSentAt == null)
+                                    {
+                                        <span class="status not-sent">No invitation sent</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="status pending">Invited</span>
+                                    }
+                                }
+                                else
+                                {
+                                    <span class="status responded">Responded</span>
+                                }
+                            </td>
+                            <td class="action-links">
+                                <a asp-action="Edit" asp-route-id="@guest.GuestId">Edit</a> |
+                                <a asp-action="Delete" asp-route-id="@guest.GuestId">Delete</a> |
+                                @if (guest.InvitationSentAt == null)
+                                {
+                                    <form asp-action="SendInvitation" method="post" class="inline-form">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@guest.GuestId" />
+                                        <button type="submit" class="btn btn-sm btn-primary">
+                                            Send RSVP form
+                                        </button>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <!-- Show button if two or more guests have been created -->
+            @if (guestsNotSent.Count >= 2)
+            {
+                <form asp-action="SendInvitations" method="post" class="bulk-invite-form">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-secondary bulk-invite-btn">
+                        Send RSVP form to all
+                    </button>
+                </form>
+            }
+        }
+        else
+        {
+            <p class="empty-message">No guests added yet.</p>
+        }
+    </div>
 }
-    </tbody>
-</table>
-<form asp-action="SendInvitations" method="post">
-    <button type="submit" class="btn btn-primary mb-3">Send Invitations to All</button>
-</form>
+
+@* Filtered view for guests that have been sent a RSVP form *@
+@if (currentFilter == "invited")
+{
+    <div class="guest-section">
+        <h2 class="section-title">Invited Guests</h2>
+
+        @if (invitedGuests.Any())
+        {
+            <table class="guest-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Send Invitation</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var guest in invitedGuests)
+                    {
+                        <tr>
+                            <td>@guest.Name</td>
+                            <td>@guest.Email</td>
+                            <td>
+                                <span class="status pending">Invited</span>
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@guest.GuestId">Edit</a> |
+                                <a asp-action="Delete" asp-route-id="@guest.GuestId">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p class="empty-message">No guests have been sent invitations yet.</p>
+        }
+    </div>
+}
+
+@* Filtered view for guests that have RSVPd *@
+@if (currentFilter == "responded")
+{
+    <div class="guest-section">
+        <h2 class="section-title">RSVP Responses</h2>
+
+        @if (respondedGuests.Any())
+        {
+            <table class="guest-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Attending</th>
+                        <th>Food</th>
+                        <th>Allergies</th>
+                        <th>Message</th>
+                        <th>RSVP Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var guest in respondedGuests)
+                    {
+                        <tr>
+                            <td>@guest.Name</td>
+                            <td>@(guest.Attending == true ? "Yes" : "No")</td>
+                            <td>@guest.FoodPref</td>
+                            <td>@guest.Allergies</td>
+                            <td>@guest.Message</td>
+                            <td>@guest.RSVPTime?.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p class="empty-message">No RSVP responses yet.</p>
+        }
+    </div>
+}
