@@ -41,7 +41,7 @@ namespace WeddingApp.Controllers
 
         // GET: Guests
         // Show all guests for logged in users wedding
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? filter)
         {
             var user = await _userManager.GetUserAsync(User);
             var wedding = await _context.Weddings.FirstOrDefaultAsync(w => w.UserId == user.Id);
@@ -52,7 +52,10 @@ namespace WeddingApp.Controllers
             var guests = await _context
                 .Guests.Where(g => g.WeddingId == wedding.WeddingId)
                 .ToListAsync();
-            ViewBag.WeddingId = wedding.WeddingId;
+
+            // Filter functionality based on status of guest
+            ViewBag.CurrentFilter = filter ?? "invited";
+
             return View(guests);
         }
 
