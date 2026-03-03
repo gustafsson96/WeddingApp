@@ -171,7 +171,8 @@ namespace WeddingApp.Controllers
                 "WeddingId,FirstPerson,SecondPerson,Date,Time,Venue,City,AdditionalInfo,HeaderImagePath"
             )]
                 Wedding updatedWedding,
-            IFormFile? headerImage
+            IFormFile? headerImage,
+            bool removeHeaderImage
         )
         {
             // Check that id match for original and updated wedding
@@ -204,6 +205,21 @@ namespace WeddingApp.Controllers
                 wedding.Venue = updatedWedding.Venue;
                 wedding.City = updatedWedding.City;
                 wedding.AdditionalInfo = updatedWedding.AdditionalInfo;
+
+                // Remove an image
+                if (removeHeaderImage && !string.IsNullOrEmpty(wedding.HeaderImagePath))
+                {
+                    var oldFile = Path.Combine(
+                        Directory.GetCurrentDirectory(),
+                        "wwwroot",
+                        wedding.HeaderImagePath.TrimStart('/')
+                    );
+                    if (System.IO.File.Exists(oldFile))
+                    {
+                        System.IO.File.Delete(oldFile);
+                    }
+                    wedding.HeaderImagePath = null;
+                }
 
                 // Handle uploaded header image
                 if (headerImage != null && headerImage.Length > 0)

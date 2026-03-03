@@ -1,3 +1,7 @@
+@section Styles {
+    <link rel="stylesheet" href="~/css/wedding-dashboard.css" asp-append-version="true" />
+}
+
 @model WeddingApp.Models.Wedding
 
 @{
@@ -6,20 +10,23 @@
 
 <h1>Edit</h1>
 
-<h4>Wedding</h4>
+<h4>Update your wedding information</h4>
 <hr />
-<div class="row">
+<div class="form-card">
+        <a href="/wedding/@Model.PublicSlug" target="_blank" class="btn btn-primary">
+            View Public Page
+        </a>
     <div class="col-md-4">
         <form asp-action="Edit" method="post" enctype="multipart/form-data"> 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="WeddingId" />
             <div class="form-group">
-                <label asp-for="FirstPerson" class="control-label"></label>
+                <label asp-for="FirstPerson" class="control-label">First person getting married</label>
                 <input asp-for="FirstPerson" class="form-control" />
                 <span asp-validation-for="FirstPerson" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SecondPerson" class="control-label"></label>
+                <label asp-for="SecondPerson" class="control-label">Second person getting married</label>
                 <input asp-for="SecondPerson" class="form-control" />
                 <span asp-validation-for="SecondPerson" class="text-danger"></span>
             </div>
@@ -44,18 +51,38 @@
                 <span asp-validation-for="City" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="AdditionalInfo" class="control-label"></label>
-                <input asp-for="AdditionalInfo" class="form-control" />
+                <label asp-for="AdditionalInfo" class="control-label">Additional information</label>
+                <textarea asp-for="AdditionalInfo" class="form-control"></textarea>
                 <span asp-validation-for="AdditionalInfo" class="text-danger"></span>
             </div>
            @if (!string.IsNullOrEmpty(Model.HeaderImagePath))
                {
-                  <img src="@Model.HeaderImagePath" class="img-fluid mb-2" />
-                }
-                <div class="form-group">
+                <div class="image-preview">
+                    <p>Your header image:</p>
+                    <img src="@Model.HeaderImagePath" class="img-fluid mb-2" />
+
+                    <button type="submit"
+                        name="removeHeaderImage"
+                        value="true"
+                        class="remove-image-btn">
+                            Remove image
+                    </button>
+                </div>
+                                <div class="form-group">
                 <label class="control-label">Change Header Image</label>
           <input type="file" name="headerImage" class="form-control" />
           </div>
+                }
+                else
+                {
+                <div class="no-image">
+                    <p>No header image</p>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Add Header Image</label>
+                    <input type="file" name="headerImage" class="form-control" />
+                </div>
+                }
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -64,7 +91,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
 </div>
 
 @section Scripts {

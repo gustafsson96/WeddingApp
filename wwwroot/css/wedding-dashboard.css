@@ -1,0 +1,79 @@
+.form-card .form-group {
+    margin-bottom: 0.8em;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-card label {
+    margin-bottom: 0.4em;
+    font-weight: 500;
+    color: #463e23;
+}
+
+textarea.form-control {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.image-preview {
+    font-weight: 500;
+    color: #463e23;
+    margin-bottom: 0.5em;
+}
+
+.image-preview img {
+    max-width: 100%;
+    border-radius: 12px;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: #9caf9c;
+    color: white;
+    border: none;
+    margin-top: 0.5em;
+    margin-bottom: 0.8em;
+    max-width: 150px;
+}
+
+.btn-primary:hover {
+    background-color: #7f997f;
+}
+
+.btn-secondary {
+    background-color: white;
+    color: #463e23;
+    border: 2px solid #463e23;
+    padding: 1px 5px;
+}
+
+.btn-secondary:hover {
+    background-color: transparent;
+    color: #9caf9c;
+}
+
+.remove-image-btn {
+    background: none;
+    border: none;
+    color: #a94442;
+    font-size: 0.9em;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+}
+
+.remove-image-btn:hover {
+    color: #7f997f;
+}
+
+/* Styling if no header image is uploaded */
+.no-image {
+    font-style: italic;
+    color: #999;
+    border: 2px dashed #ccc;
+    padding: 1em;
+    text-align: center;
+    border-radius: 12px;
+    background-color: #fafafa;
+    margin-bottom: 0.8em;
+}
