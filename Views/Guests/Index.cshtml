@@ -102,7 +102,12 @@
                             </td>
                             <td class="action-links">
                                 <a asp-action="Edit" asp-route-id="@guest.GuestId">Edit</a> |
-                                <a asp-action="Delete" asp-route-id="@guest.GuestId">Delete</a> |
+                                <form asp-action="Delete" method="post" style="display:inline;" 
+                                      onsubmit="return confirm('Are you sure you want to delete @guest.Name?');">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@guest.GuestId" />
+                                    <button type="submit" class="btn delete-btn">Delete</button>
+                                </form>
                                 @if (guest.InvitationSentAt == null)
                                 {
                                     <form asp-action="SendInvitation" method="post" class="inline-form">
@@ -166,7 +171,12 @@
                             </td>
                             <td class="action-links">
                                 <a asp-action="Edit" asp-route-id="@guest.GuestId">Edit</a> |
-                                <a asp-action="Delete" asp-route-id="@guest.GuestId">Delete</a>
+                                <form asp-action="Delete" method="post" style="display:inline;" 
+                                      onsubmit="return confirm('Are you sure you want to delete @guest.Name?');">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@guest.GuestId" />
+                                    <button type="submit" class="btn delete-btn">Delete</button>
+                                </form>
                                     <form asp-action="SendInvitation" method="post" class="inline-form" style="display:inline-block; margin-left: 0.5rem;">
                                         @Html.AntiForgeryToken()
                                         <input type="hidden" name="id" value="@guest.GuestId" />
@@ -219,7 +229,12 @@
                             <td>@guest.RSVPTime?.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
                                                         <td class="action-links">
                                 <a asp-action="Edit" asp-route-id="@guest.GuestId">Edit</a> |
-                                <a asp-action="Delete" asp-route-id="@guest.GuestId">Delete</a> 
+                                <form asp-action="Delete" method="post" style="display:inline;" 
+                                      onsubmit="return confirm('Are you sure you want to delete @guest.Name?');">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@guest.GuestId" />
+                                    <button type="submit" class="btn delete-btn">Delete</button>
+                                </form>
                             </td>
                         </tr>
                     }

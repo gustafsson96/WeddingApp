@@ -76,17 +76,24 @@
     color: #463e23;
 }
 
-
 /* Edit and delete links */
-.action-links a {
-    margin: 0 0.3em;
+
+.action-links a,
+.action-links .delete-btn {
     color: #463e23;
     font-weight: 500;
     text-decoration: none;
+    margin: 0 0.3em;
 }
 
-.action-links a:hover {
+.action-links a:hover,
+.action-links  .delete-btn:hover {
     text-decoration: underline;
+}
+
+.action-links .delete-btn {
+    padding: 0;
+    margin-right: 0.6em;
 }
 
 /* Filter tabs */
