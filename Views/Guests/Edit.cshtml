@@ -1,77 +1,84 @@
+@section Styles {
+    <link rel="stylesheet" href="~/css/guestlist.css" asp-append-version="true" />
+}
+
 @model WeddingApp.Models.Guest
 
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
-
-<h4>Guest</h4>
+<h1>Edit Guest</h1>
 <hr />
-<div class="row">
+<div class="form-card">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" method="post">
+            @* Validation summary *@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @* Hidden fields *@
             <input type="hidden" asp-for="GuestId" />
-            <div class="form-group">
-                <label asp-for="WeddingId" class="control-label"></label>
-                <select asp-for="WeddingId" class="form-control" asp-items="ViewBag.WeddingId"></select>
-                <span asp-validation-for="WeddingId" class="text-danger"></span>
-            </div>
+            <input type="hidden" asp-for="WeddingId" />
+            <input type="hidden" asp-for="RSVPToken" />
+            <input type="hidden" asp-for="RSVPTime" />
+            <input type="hidden" asp-for="InvitationSentAt" />
+
+            <!-- Name field -->
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
+
+            <!-- Email field -->
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
+                <input asp-for="Email" class="form-control" type="email" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Attending" class="control-label"></label>
-                <input asp-for="Attending" class="form-control" />
-                <span asp-validation-for="Attending" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RSVPTime" class="control-label"></label>
-                <input asp-for="RSVPTime" class="form-control" />
-                <span asp-validation-for="RSVPTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FoodPref" class="control-label"></label>
-                <input asp-for="FoodPref" class="form-control" />
-                <span asp-validation-for="FoodPref" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Allergies" class="control-label"></label>
-                <input asp-for="Allergies" class="form-control" />
-                <span asp-validation-for="Allergies" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Message" class="control-label"></label>
-                <input asp-for="Message" class="form-control" />
-                <span asp-validation-for="Message" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RSVPToken" class="control-label"></label>
-                <input asp-for="RSVPToken" class="form-control" />
-                <span asp-validation-for="RSVPToken" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="InvitationSentAt" class="control-label"></label>
-                <input asp-for="InvitationSentAt" class="form-control" />
-                <span asp-validation-for="InvitationSentAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+
+             <!-- Show the rest of the fields if a guest has RSVPd so there is information to edit -->
+            @if (Model.RSVPTime != null)
+            {
+                @* Attending *@
+                <div class="form-group">
+                    <label class="control-label">Attendance</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" asp-for="Attending" value="true" />
+                        <label class="form-check-label">Attending</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" asp-for="Attending" value="false" />
+                        <label class="form-check-label">Not attending</label>
+                    </div>
+                    <span asp-validation-for="Attending" class="text-danger"></span>
+                </div>
+                @* Meal preference *@
+                <div class="form-group">
+                    <label asp-for="FoodPref" class="control-label">Food Preference</label>
+                    <input asp-for="FoodPref" class="form-control" />
+                    <span asp-validation-for="FoodPref" class="text-danger"></span>
+                </div>
+                @* Allergies *@
+                <div class="form-group">
+                    <label asp-for="Allergies" class="control-label">Allergies</label>
+                    <input asp-for="Allergies" class="form-control" />
+                    <span asp-validation-for="Allergies" class="text-danger"></span>
+                </div>
+                @* Message *@
+                <div class="form-group">
+                    <label asp-for="Message" class="control-label">Message</label>
+                    <textarea asp-for="Message" class="form-control"></textarea>
+                    <span asp-validation-for="Message" class="text-danger"></span>
+                </div>
+            }
+
+            <div class="form-group form-buttons">
+                <input type="submit" value="Save Changes" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary cancel-btn">Cancel</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

@@ -192,6 +192,10 @@
     margin-top: 2.5em;
 }
 
+.cancel-btn {
+    margin-left: 0.8em;
+}
+
 /* Media query for screens smaller than 768px */
 @media (max-width: 768px) {
 
