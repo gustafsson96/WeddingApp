@@ -72,7 +72,7 @@
 
 .bulk-info {
     font-style: italic;
-    margin-bottom: 3em;
+    margin-bottom: 0.5em;
     color: #463e23;
 }
 
@@ -186,6 +186,10 @@
 .btn-secondary:hover {
     background-color: transparent;
     color: #9caf9c;
+}
+
+.back-btn {
+    margin-top: 2.5em;
 }
 
 /* Media query for screens smaller than 768px */
