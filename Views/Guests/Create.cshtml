@@ -1,14 +1,18 @@
+@section Styles {
+    <link rel="stylesheet" href="~/css/guestlist.css" asp-append-version="true" />
+}
+
 @model WeddingApp.Models.Guest
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Add Guest</h1>
 
-<h4>Guest</h4>
+<h4>Fill out name and email for your guest</h4>
 <hr />
-<div class="row">
+<div class="form-card">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -26,27 +30,7 @@
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Attending" class="control-label"></label>
-                <input asp-for="Attending" class="form-control" />
-                <span asp-validation-for="Attending" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <input type="hidden" asp-for="RSVPTime" />
-            </div>
-            <div class="form-group">
-                <label asp-for="FoodPref" class="control-label"></label>
-                <input asp-for="FoodPref" class="form-control" />
-                <span asp-validation-for="FoodPref" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Allergies" class="control-label"></label>
-                <input asp-for="Allergies" class="form-control" />
-                <span asp-validation-for="Allergies" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Message" class="control-label"></label>
-                <input asp-for="Message" class="form-control" />
-                <span asp-validation-for="Message" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="hidden" asp-for="RSVPToken" />
@@ -55,14 +39,13 @@
                 <input asp-for="InvitationSentAt" class="form-control" type="hidden" />
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create Guest" class="btn btn-primary" />
             </div>
         </form>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+<div class="back-container">
+    <a asp-action="Index" class="btn btn-secondary">Back to Guestlist</a>
 </div>
 
 @section Scripts {

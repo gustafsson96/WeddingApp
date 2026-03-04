@@ -25,7 +25,8 @@
     margin-bottom: 2em;
 }
 
-.guest-table th, .guest-table td {
+.guest-table th,
+.guest-table td {
     padding: 0.8em 1em;
     border-bottom: 1px solid #eee;
     text-align: left;
@@ -48,17 +49,6 @@
     font-size: 0.85em;
     border-radius: 8px;
     font-weight: 600;
-}
-
-/* Primary button */
-.btn-primary {
-    background-color: #7f997f;
-    color: white;
-    border: none;
-}
-
-.btn-primary:hover {
-    background-color: #9caf9c;
 }
 
 /* Other buttons */
@@ -124,11 +114,11 @@
 }
 
 .status.not-sent {
-    background-color: #f5c97b; 
+    background-color: #f5c97b;
 }
 
 .status.pending {
-    background-color: #9caf9c; 
+    background-color: #9caf9c;
     color: white;
 }
 
@@ -137,9 +127,52 @@
     color: white;
 }
 
+/* Form styling for create and edit */
+
+.form-card .form-group {
+    margin-bottom: 0.5em;
+}
+
+.form-card label {
+    margin-bottom: 0.4em;
+    font-weight: 500;
+    color: #463e23;
+}
+
+.back-container {
+    margin-top: 1.5em;
+}
+
+/* Primary and secondary buttons */
+.btn-primary {
+    background-color: #7f997f;
+    color: white;
+    border: none;
+    margin-top: 0.5em;
+    margin-bottom: 0.8em;
+}
+
+.btn-primary:hover {
+    background-color: #9caf9c;
+}
+
+.btn-secondary {
+    background-color: white;
+    color: #463e23;
+    border: 2px solid #463e23;
+    padding: 1px 5px;
+}
+
+.btn-secondary:hover {
+    background-color: transparent;
+    color: #9caf9c;
+}
+
 /* Media query for screens smaller than 768px */
 @media (max-width: 768px) {
-    .guest-table th, .guest-table td {
+
+    .guest-table th,
+    .guest-table td {
         font-size: 0.9em;
     }
 
