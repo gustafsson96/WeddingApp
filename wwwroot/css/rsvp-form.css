@@ -1,0 +1,104 @@
+/* Styling for RSVP form and 'thank you' view */
+
+/* RSVP form */
+.form-card {
+    max-width: 500px;   
+    margin: 2em auto; 
+    padding: 2em;         
+    background-color: #f8f9f7; 
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+}
+
+/* Wedding info box */
+.wedding-info {
+    display: block;
+    text-align: center;
+    margin: 1.5em auto;
+    font-weight: 500;
+}
+
+.wedding-info p {
+    margin-bottom: 1em;
+    font-size: 1.1em;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    color: #3d4033;
+}
+
+.form-card .form-group {
+    margin-bottom: 1em;
+}
+
+.form-card label {
+    display: block;
+    margin-bottom: 0.3em;
+    margin-top: 1em;
+    font-weight: 600;
+    color: #463e23;
+}
+
+.radio-btn-group {
+    display: flex;
+    gap: 1em;
+}
+
+/* Hide default radio button */
+.radio-btn-group input[type="radio"] {
+    display: none;
+}
+
+/* Style radio label as a button */
+.radio-btn {
+    display: inline-block;
+    padding: 10px 25px;
+    background-color: #e6ede6;
+    color: #463e23;
+    font-weight: 500;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    flex: 1; 
+}
+
+.radio-btn:hover {
+    background-color: #cfd9cf;
+}
+
+/* Marked radio button */
+.radio-btn-group input[type="radio"]:checked + .radio-btn {
+    background-color: #7f997f;
+    color: white;
+    font-weight: 600;
+}
+
+/* Submit button */
+.btn-primary {
+    display: block;
+    width: 100%;
+    background-color: #7f997f;
+    color: white;
+    border: none;
+    padding: 0.6em;
+    font-size: 1em;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 1em;
+}
+
+.btn-primary:hover {
+    background-color: #9caf9c;
+}
+
+/* Make dropdown full width */
+.form-card select {
+    width: 100%;
+    padding: 0.4em;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}

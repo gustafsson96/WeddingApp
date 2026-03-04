@@ -24,5 +24,8 @@ namespace WeddingApp.Models
         public string? Message { get; set; }
         public Guid RSVPToken { get; set; }
         public DateTime? InvitationSentAt { get; set; }
+
+        // Navigation property
+        public Wedding? Wedding { get; set; }
     }
 }

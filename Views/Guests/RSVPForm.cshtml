@@ -1,38 +1,57 @@
+@section Styles {
+    <link rel="stylesheet" href="~/css/rsvp-form.css" asp-append-version="true" />
+}
+
 @model WeddingApp.Models.Guest
 
 @{
     ViewData["Title"] = "RSVP";
 }
 
-<h1>@Model.Name, you're invited to join the celebration!</h1>
-<p>RSVP here:</p>
+<h1>@Model.Name, you're invited to the wedding of @Model.Wedding.FirstPerson & @Model.Wedding.SecondPerson!</h1>
 
-<form asp-action="RSVPForm" method="post">
-    <input type="hidden" asp-for="GuestId" />
+<div class="wedding-info">
+    <p>
+        <strong>Date & Time:</strong> @Model.Wedding.Date.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</p>
+    </p>    
+    <p>
+        <strong>Location:</strong> @Model.Wedding.Venue, @Model.Wedding.City
+    </p>
+</div>
 
-    <div class="form-group">
-        <label>Will you attend?</label><br />
-        <input type="radio" asp-for="Attending" value="true" /> Yes
-        <input type="radio" asp-for="Attending" value="false" /> No
-    </div>
-    <label>Meal choice</label>
-@Html.DropDownListFor(
-    m => m.FoodPref,
-    new List<SelectListItem> {
-        new SelectListItem { Text = "Meat", Value = "Meat" },
-        new SelectListItem { Text = "Vegetarian", Value = "Vegetarian" }
-    },
-    "Select..."
-)
-    <div class="form-group">
-        <label asp-for="Allergies">Food allergies</label>
-        <input class="form-control" asp-for="Allergies" />
-    </div>
+<div class="form-card">
+        <form asp-action="RSVPForm" method="post">
+            <input type="hidden" asp-for="GuestId" />
+            <div class="form-group">
+                <label>Will you attend?</label>
+                
+                <div class="radio-btn-group">
+                    <input type="radio" id="attending-yes" name="Attending" value="true" asp-for="Attending" />
+                    <label for="attending-yes" class="radio-btn">Yes</label>
 
-    <div class="form-group">
-        <label asp-for="Message">Anything else you'd like to tell us?</label>
-        <textarea class="form-control" asp-for="Message"></textarea>
-    </div>
+                    <input type="radio" id="attending-no" name="Attending" value="false" asp-for="Attending" />
+                    <label for="attending-no" class="radio-btn">No</label>
+                </div>
+            </div>
+            <label>Meal choice</label>
+                @Html.DropDownListFor(
+                    m => m.FoodPref,
+                    new List<SelectListItem> {
+                        new SelectListItem { Text = "Meat", Value = "Meat" },
+                        new SelectListItem { Text = "Vegetarian", Value = "Vegetarian" }
+                    },
+                    "Select..."
+                )
+            <div class="form-group">
+                <label asp-for="Allergies">Food allergies</label>
+                <input class="form-control" asp-for="Allergies" />
+            </div>
 
-    <button type="submit" class="btn btn-primary">Submit RSVP</button>
-</form>
+            <div class="form-group">
+                <label asp-for="Message">Anything else you'd like to tell us?</label>
+                <textarea class="form-control" asp-for="Message"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit RSVP</button>
+        </form>
+</div>

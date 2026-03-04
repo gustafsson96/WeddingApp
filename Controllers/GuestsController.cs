@@ -349,7 +349,9 @@ namespace WeddingApp.Controllers
         public async Task<IActionResult> RSVPForm(Guid token)
         {
             // Find the guest in the database using the unique token from the url
-            var guest = await _context.Guests.FirstOrDefaultAsync(g => g.RSVPToken == token);
+            var guest = await _context
+                .Guests.Include(g => g.Wedding)
+                .FirstOrDefaultAsync(g => g.RSVPToken == token);
 
             // Return 404 if no guest matches the token
             if (guest == null)

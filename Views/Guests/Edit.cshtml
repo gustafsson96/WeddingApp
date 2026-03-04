@@ -54,11 +54,15 @@
                     <span asp-validation-for="Attending" class="text-danger"></span>
                 </div>
                 @* Meal preference *@
-                <div class="form-group">
-                    <label asp-for="FoodPref" class="control-label">Food Preference</label>
-                    <input asp-for="FoodPref" class="form-control" />
-                    <span asp-validation-for="FoodPref" class="text-danger"></span>
-                </div>
+                <label>Meal choice</label>
+                @Html.DropDownListFor(
+                    m => m.FoodPref,
+                    new List<SelectListItem> {
+                        new SelectListItem { Text = "Meat", Value = "Meat" },
+                        new SelectListItem { Text = "Vegetarian", Value = "Vegetarian" }
+                    },
+                    "Select..."
+                )
                 @* Allergies *@
                 <div class="form-group">
                     <label asp-for="Allergies" class="control-label">Allergies</label>
