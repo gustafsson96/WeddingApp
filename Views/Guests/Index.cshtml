@@ -204,6 +204,7 @@
                         <th>Allergies</th>
                         <th>Message</th>
                         <th>RSVP Date</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -216,6 +217,10 @@
                             <td>@guest.Allergies</td>
                             <td>@guest.Message</td>
                             <td>@guest.RSVPTime?.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
+                                                        <td class="action-links">
+                                <a asp-action="Edit" asp-route-id="@guest.GuestId">Edit</a> |
+                                <a asp-action="Delete" asp-route-id="@guest.GuestId">Delete</a> 
+                            </td>
                         </tr>
                     }
                 </tbody>
