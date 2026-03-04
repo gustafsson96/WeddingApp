@@ -385,13 +385,12 @@ namespace WeddingApp.Controllers
             guest.Message = message;
             guest.RSVPTime = DateTime.UtcNow;
 
-            _context.Update(guest);
-
             // Save changes to database
+            _context.Update(guest);
             await _context.SaveChangesAsync();
 
             // Redirect to a Thank You page after form has been submitted
-            return View("ThankYou");
+            return View("ThankYou", guest);
         }
     }
 }

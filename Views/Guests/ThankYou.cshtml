@@ -1,8 +1,24 @@
-@{
-    ViewData["Title"] = "Thank You";
+@section Styles {
+    <link rel="stylesheet" href="~/css/rsvp-form.css" asp-append-version="true" />
 }
 
-<h1>Thank You!</h1>
-<p>
-    Your RSVP has been recorded :-)
-</p>
+@{
+    ViewData["Title"] = "Thank You";
+    var attendingTitle = Model.Attending == true 
+        ? "Thank you :D" 
+        : "Thanks for letting us know <3";
+    var attendingText = Model.Attending == true 
+        ? "We look forward to celebrating with you!" 
+        : "We hope to see you some other time soon.";
+}
+
+<div class="thankyou-card">
+    <h1>@attendingTitle</h1>
+    <p>
+        @attendingText
+    </p>
+
+    <div class="thankyou-actions">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Home</a>
+    </div>
+</div>
