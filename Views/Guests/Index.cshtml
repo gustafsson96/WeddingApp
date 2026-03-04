@@ -7,7 +7,7 @@
 @{
     ViewData["Title"] = "Guest List";
 
-    var currentFilter = ViewBag.CurrentFilter as string ?? "invited";
+    var currentFilter = ViewBag.CurrentFilter as string;
 
     // Different filter options
     var invitedGuests = Model.Where(g => g.RSVPTime == null && g.InvitationSentAt != null).ToList();
@@ -30,8 +30,8 @@
 
 <h1 class="page-title">Guest List</h1>
 
-<!-- Add new guest button -->
-<div class="top-actions">
+<!-- Add new guest/Back to dashboard buttons -->
+<div>
     <a asp-action="Create" class="btn btn-primary">Add New Guest</a>
 </div>
 
@@ -124,10 +124,11 @@
             {
                 <form asp-action="SendInvitations" method="post" class="bulk-invite-form">
                     @Html.AntiForgeryToken()
-                    <button type="submit" class="btn btn-secondary bulk-invite-btn">
+                    <button type="submit" class="btn bulk-invite-btn">
                         Send RSVP form to all
                     </button>
                 </form>
+                <p class="bulk-info">The RSVP form will be sent to guests with status "No invitation sent".</p>
             }
         }
         else
@@ -219,3 +220,7 @@
         }
     </div>
 }
+
+<div>
+    <a asp-controller="Dashboard" asp-action="Index" class="btn btn-secondary">Back to Dashboard</a>
+</div>

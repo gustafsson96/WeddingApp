@@ -51,11 +51,31 @@
     font-weight: 600;
 }
 
-/* Other buttons */
-.bulk-invite-btn {
-    padding: 0.8em 1.5em;
-    margin-top: 1em;
+.bulk-invite-form {
+    display: flex;
+    margin-bottom: 0.5em;
 }
+
+.bulk-invite-btn {
+    padding: 0.35em 0.7em;
+    font-size: 0.85em;
+    border-radius: 8px;
+    font-weight: 600;
+    background-color: #7f997f;
+    color: #fff;
+}
+
+.bulk-invite-btn:hover {
+    background-color: #9caf9c;
+    color: #fff;
+}
+
+.bulk-info {
+    font-style: italic;
+    margin-bottom: 3em;
+    color: #463e23;
+}
+
 
 /* Edit and delete links */
 .action-links a {

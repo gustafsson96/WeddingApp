@@ -54,7 +54,7 @@ namespace WeddingApp.Controllers
                 .ToListAsync();
 
             // Filter functionality based on status of guest
-            ViewBag.CurrentFilter = filter ?? "invited";
+            ViewBag.CurrentFilter = filter ?? "all";
 
             return View(guests);
         }
