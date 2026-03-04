@@ -330,19 +330,17 @@ namespace WeddingApp.Controllers
             if (wedding == null)
                 return BadRequest("You have to create a wedding first. ");
 
-            // Get guests for the wedding
+            // Get guests for a wedding and filter out those who have not been sent an invitiation
             var guests = await _context
-                .Guests.Where(g => g.WeddingId == wedding.WeddingId)
+                .Guests.Where(g => g.WeddingId == wedding.WeddingId && g.InvitationSentAt == null)
                 .ToListAsync();
 
-            // Send invitations to all guests
             foreach (var guest in guests)
             {
                 await SendRSVPEmail(guest);
             }
 
-            // Notify admin that emails have been sent and redirect
-            TempData["Message"] = "RSVP forms sent to all guests.";
+            TempData["Message"] = "RSVP forms sent to all guests who hadn't received one yet.";
             return RedirectToAction(nameof(Index));
         }
 
