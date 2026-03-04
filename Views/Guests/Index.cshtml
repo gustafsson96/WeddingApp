@@ -151,7 +151,7 @@
                     <tr>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Send Invitation</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -164,9 +164,16 @@
                             <td>
                                 <span class="status pending">Invited</span>
                             </td>
-                            <td>
+                            <td class="action-links">
                                 <a asp-action="Edit" asp-route-id="@guest.GuestId">Edit</a> |
                                 <a asp-action="Delete" asp-route-id="@guest.GuestId">Delete</a>
+                                    <form asp-action="SendInvitation" method="post" class="inline-form" style="display:inline-block; margin-left: 0.5rem;">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@guest.GuestId" />
+                                        <button type="submit" class="btn btn-sm btn-primary">
+                                            Send RSVP form again
+                                        </button>
+                                    </form>
                             </td>
                         </tr>
                     }
