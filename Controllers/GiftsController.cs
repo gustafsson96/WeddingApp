@@ -31,7 +31,7 @@ namespace WeddingApp.Controllers
         }
 
         // GET: Gifts for logged in users wedding
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? filter)
         {
             // Get the logged in user
             var user = await _userManager.GetUserAsync(User);
@@ -43,10 +43,25 @@ namespace WeddingApp.Controllers
             if (wedding == null)
                 return BadRequest("You must create a wedding first.");
 
-            // Get the gifts for the specific wedding
-            var gifts = await _context
-                .Gifts.Where(g => g.WeddingId == wedding.WeddingId)
-                .ToListAsync();
+            // Base query for gifts
+            var giftsQuery = _context.Gifts.Where(g => g.WeddingId == wedding.WeddingId);
+
+            // Set default filter if null
+            filter ??= "all";
+
+            // Set current filter for the view
+            ViewBag.CurrentFilter = filter;
+
+            // Apply filter based on available or reserved
+            if (filter == "reserved")
+            {
+                giftsQuery = giftsQuery.Where(g => g.IsReserved);
+            }
+            else if (filter == "available")
+            {
+                giftsQuery = giftsQuery.Where(g => !g.IsReserved);
+            }
+            var gifts = await giftsQuery.ToListAsync();
 
             return View(gifts);
         }

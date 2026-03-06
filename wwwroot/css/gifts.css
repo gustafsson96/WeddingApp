@@ -1,0 +1,143 @@
+/* Styling for gift table in admin view */
+
+.gift-actions {
+    margin-bottom: 1.5em;
+}
+
+.gift-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2em;
+}
+
+.gift-table th,
+.gift-table td {
+    padding: 0.8em 1em;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+    font-size: 0.95em;
+}
+
+.gift-table th {
+    font-weight: 600;
+    color: #463e23;
+}
+
+.gift-image {
+    max-height: 60px;
+    border-radius: 4px;
+}
+
+/* Filter tabs */
+.filter-tabs {
+    display: flex;
+    gap: 1em;
+    justify-content: center;
+    margin-bottom: 2em;
+    flex-wrap: wrap;
+}
+
+.filter-tab {
+    text-decoration: none;
+    padding: 0.5em 1.2em;
+    border-radius: 20px;
+    background-color: #f4f4f0;
+    color: #463e23;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.filter-tab.active {
+    background-color: #7f997f;
+    color: white;
+}
+
+.filter-tab:hover {
+    background-color: #9caf9c;
+    color: white;
+}
+
+/* Status badges */
+.status {
+    padding: 0.2em 0.5em;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.85em;
+}
+
+.status.available {
+    background-color: #9caf9c;
+    color: white;
+}
+
+.status.reserved {
+    background-color: #f5c97b;
+    color: #463e23;
+}
+
+/* Styling for gift link */
+.gift-link {
+    display: inline-block;
+    padding: 3px 4px;
+    background-color: #4CAF50; 
+    color: white; 
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    font-size: 0.85em;
+}
+
+.gift-link:hover {
+    background-color: #45a049;
+    color: #fff;
+}
+
+/* Action links */
+.action-links a {
+    color: #463e23;
+    font-weight: 500;
+    text-decoration: none;
+    margin: 0 0.3em;
+}
+
+.action-links a:hover {
+    text-decoration: underline;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: #7f997f;
+    color: white;
+    border: none;
+    margin-top: 0.5em;
+    margin-bottom: 0.8em;
+}
+
+.btn-primary:hover {
+    background-color: #9caf9c;
+}
+
+.btn-secondary {
+    background-color: white;
+    color: #463e23;
+    border: 2px solid #463e23;
+    padding: 1px 5px;
+}
+
+.btn-secondary:hover {
+    background-color: transparent;
+    color: #9caf9c;
+}
+
+/* Media query for screens smaller than 768px */
+@media (max-width: 768px) {
+    .gift-table th,
+    .gift-table td {
+        font-size: 0.9em;
+    }
+
+    .filter-tabs {
+        flex-direction: column;
+        align-items: center;
+    }
+}

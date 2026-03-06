@@ -1,68 +1,82 @@
 @model IEnumerable<WeddingApp.Models.Gift>
 
+@section Styles {
+    <link rel="stylesheet" href="~/css/gifts.css" asp-append-version="true" />
+}
+
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Gift List";
+    var currentFilter = ViewBag.CurrentFilter as string ?? "all";
 }
 
-<h1>Index</h1>
+<h1 class="page-title">Gift List</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Link)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsReserved)
-            </th>
-            <th>
-                Gift Image
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Link)
-            </td>
-            <td>
-                @($"{item.Price} SEK")
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsReserved)
-            </td>
-                <td>
-                    @if (!string.IsNullOrEmpty(item.GiftImagePath))
-                    {
-                        <img src="@item.GiftImagePath" style="max-height: 60px;" />
-                    }
-                </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.GiftId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.GiftId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.GiftId">Delete</a>
-            </td>
-        </tr>
+<div class="gift-actions">
+    <a asp-action="Create" class="btn btn-primary">Add New Gift</a>
+</div>
+
+<!-- Filter tabs -->
+<div class="filter-tabs">
+    <a asp-action="Index" asp-route-filter="all" class="filter-tab @(currentFilter == "all" ? "active" : "")">All Gifts</a>
+    <a asp-action="Index" asp-route-filter="available" class="filter-tab @(currentFilter == "available" ? "active" : "")">Available</a>
+    <a asp-action="Index" asp-route-filter="reserved" class="filter-tab @(currentFilter == "reserved" ? "active" : "")">Reserved</a>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="empty-state">
+        <h2>No gifts found.</h2>
+        <p>Try adding a new gift or switch to a different filter.</p>
+        <a asp-action="Create" class="btn btn-primary">Add Gift</a>
+    </div>
 }
-    </tbody>
-</table>
+else
+{
+    <table class="gift-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Link</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var gift in Model)
+            {
+                <tr>
+                    <td>@gift.Name</td>
+                    <td>@gift.Description</td>
+                    <td>
+                        @if(!string.IsNullOrEmpty(gift.Link))
+                        {
+                            <a href="@gift.Link" target="_blank" class="gift-link btn">View Gift</a>
+                        }
+                    </td>
+                    <td>@($"{gift.Price} SEK")</td>
+                    <td>
+                        @if (gift.IsReserved)
+                        {
+                            <span class="status reserved">Reserved</span>
+                        }
+                        else
+                        {
+                            <span class="status available">Available</span>
+                        }
+                    </td>
+                    <td class="action-links">
+                        <a asp-action="Edit" asp-route-id="@gift.GiftId">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@gift.GiftId">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@gift.GiftId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<div class="back-btn">
+    <a asp-controller="Dashboard" asp-action="Index" class="btn btn-secondary">Back to Dashboard</a>
+</div>
