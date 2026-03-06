@@ -129,6 +129,71 @@
     color: #9caf9c;
 }
 
+.back-container {
+    margin-top: 1.5em;
+}
+
+/* Form styling for gifts create and edit */
+.form-card .form-group {
+    margin-bottom: 0.5em;
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+}
+
+.form-card label {
+    margin-bottom: 0.4em;
+    font-weight: 500;
+    color: #463e23;
+}
+
+.form-card input.form-control,
+.form-card textarea.form-control,
+.form-card select.form-control {
+    padding: 0.5em 0.75em;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 0.95em;
+}
+
+.form-card textarea.form-control {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Buttons like guestlist */
+.form-card .btn-primary {
+    background-color: #7f997f;
+    color: #fff;
+    border: none;
+    margin-top: 0.5em;
+    max-width: 150px;
+}
+
+.form-card .btn-primary:hover {
+    background-color: #9caf9c;
+}
+
+.form-card .btn-secondary {
+    background-color: #fff;
+    color: #463e23;
+    border: 2px solid #463e23;
+    padding: 1px 5px;
+    margin-left: 0.5em;
+}
+
+.form-card .btn-secondary:hover {
+    background-color: transparent;
+    color: #9caf9c;
+}
+
+/* File input styling */
+.form-card input[type="file"] {
+    padding: 0.4em;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
 /* Media query for screens smaller than 768px */
 @media (max-width: 768px) {
     .gift-table th,
