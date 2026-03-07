@@ -88,7 +88,13 @@
                             <td class="action-links">
                                 <a asp-action="Edit" asp-route-id="@gift.GiftId">Edit</a> |
                                 <a asp-action="Details" asp-route-id="@gift.GiftId">Details</a> |
-                                <a asp-action="Delete" asp-route-id="@gift.GiftId">Delete</a>
+                                
+                                <form asp-action="Delete" method="post" style="display:inline;" 
+                                    onsubmit="return confirm('Are you sure you want to delete @gift.Name?');">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@gift.GiftId" />
+                                    <button type="submit" class="btn delete-btn">Delete</button>
+                                </form>
                             </td>
                         </tr>
                     }
@@ -135,11 +141,17 @@
                             </td>
                             <td>@($"{gift.Price} SEK")</td>
                             <td><span class="status available">Available</span></td>
-                            <td class="action-links">
-                                <a asp-action="Edit" asp-route-id="@gift.GiftId">Edit</a> |
-                                <a asp-action="Details" asp-route-id="@gift.GiftId">Details</a> |
-                                <a asp-action="Delete" asp-route-id="@gift.GiftId">Delete</a>
-                            </td>
+                        <td class="action-links">
+                            <a asp-action="Edit" asp-route-id="@gift.GiftId">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@gift.GiftId">Details</a> |
+                            
+                            <form asp-action="Delete" method="post" style="display:inline;" 
+                                onsubmit="return confirm('Are you sure you want to delete @gift.Name?');">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@gift.GiftId" />
+                                <button type="submit" class="btn delete-btn">Delete</button>
+                            </form>
+                        </td>
                         </tr>
                     }
                 </tbody>
