@@ -1,28 +1,61 @@
 @model WeddingApp.Models.Wedding
 
-@if (!string.IsNullOrEmpty(Model.HeaderImagePath))
-{
-    <img src="@Model.HeaderImagePath" alt="Header for @Model.FirstPerson & @Model.SecondPerson" class="img-fluid mb-3" />
-}
-else
-{
-    <div class="mb-3" style="height:150px; background-color:#f0f0f0;"></div>
+@section Styles {
+    <link rel="stylesheet" href="~/css/wedding-public.css" />
 }
 
-<div>
-    <h1>@Model.FirstPerson & @Model.SecondPerson</h1>
+@section HideNavbar { }
+
+<div class="hero-flower">
+    <img src="~/images/hero-flower.png" alt="Decorative flower" />
 </div>
 
-<section>
-    <h2>Welcome!</h2>
-    <p>@Model.Date.ToShortDateString() kl @Model.Time</p>
-    <p>@Model.Venue, @Model.City</p>
+<header class="wedding-title">
+    <h1>@Model.FirstPerson & @Model.SecondPerson</h1>
+    <p class="date-location">@Model.Date.ToShortDateString() • @Model.City</p>
+</header>
+
+<div class="user-header-image">
+    @if (!string.IsNullOrEmpty(Model.HeaderImagePath))
+    {
+        <img src="@Model.HeaderImagePath" alt="Header for @Model.FirstPerson & @Model.SecondPerson" />
+    }
+    else
+    {
+        <div class="header-placeholder"></div>
+    }
+</div>
+
+<section class="date-venue-row">
+    <div class="date-container">
+        <p>@Model.Date.ToString("MMMM d yyyy")</p>
+    </div>
+    <div class="separator"></div>
+    <div class="city-container">
+        <p>@Model.City</p>
+    </div>
 </section>
 
-@if (!string.IsNullOrEmpty(Model.AdditionalInfo))
-{
-    <section>
-        <h2>Information</h2>
-        <p>@Model.AdditionalInfo</p>
-    </section>
-}
+<section class="registry-btn text-center">
+    <a asp-controller="Weddings"
+       asp-action="Wishlist"
+       asp-route-slug="@Model.PublicSlug"
+       class="btn btn-primary">
+       View Registry
+    </a>
+</section>
+
+<section class="wedding-info">
+    <p class="big-info">@Model.Venue</p>
+    <p class="small-info">@Model.Date.ToString("MMMM d yyyy")</p>
+    <p class="small-info">Starts: @Model.Time</p>
+    @if (!string.IsNullOrEmpty(Model.AdditionalInfo))
+    {
+        <p class="small-info">@Model.AdditionalInfo</p>
+    }
+</section>
+
+<div class="end-container">
+    <p>@Model.FirstPerson & @Model.SecondPerson</p>
+    <p>@Model.Date.ToString("MMMM d yyyy")</p>
+</div>
