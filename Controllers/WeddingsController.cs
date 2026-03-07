@@ -264,7 +264,7 @@ namespace WeddingApp.Controllers
 
                 // Redirect to dashboard after saving
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Dashboard");
             }
 
             return View(updatedWedding);
