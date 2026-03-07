@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WeddingApp.Models
 {
@@ -27,8 +28,10 @@ namespace WeddingApp.Models
 
         public bool IsReserved { get; set; }
 
-        [Display(Name = "Gift Image")]
         public string? GiftImagePath { get; set; }
+
+        [NotMapped]
+        public IFormFile? GiftImageFile { get; set; }
 
         // Navigation property
         public Wedding? Wedding { get; set; }

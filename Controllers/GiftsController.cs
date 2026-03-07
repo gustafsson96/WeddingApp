@@ -183,7 +183,7 @@ namespace WeddingApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(
             int id,
-            [Bind("GiftId,Name,Description,Link,Price,ImagePath")] Gift updatedGift,
+            [Bind("GiftId,Name,Description,Link,Price,GiftImagePath")] Gift updatedGift,
             IFormFile? giftImage
         )
         {
