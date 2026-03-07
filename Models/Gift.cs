@@ -20,7 +20,6 @@ namespace WeddingApp.Models
         [StringLength(200, ErrorMessage = "Link cannot exceed 200 characters")]
         public string? Link { get; set; }
 
-        [Required(ErrorMessage = "Price is required")]
         [Range(0.01, 1000000, ErrorMessage = "Price must be greater than 0")]
         [DataType(DataType.Currency)]
         [DisplayFormat(DataFormatString = "{0:0.##}", ApplyFormatInEditMode = true)]
