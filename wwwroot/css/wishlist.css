@@ -1,3 +1,28 @@
+.top-content {
+    text-align: center;
+    margin: 2em;
+}
+
+h2 {
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: #7f997f;
+    color: white;
+    border: none;
+    padding: 0.5em 1em;
+    font-size: 1em;
+    border-radius: 6px;
+    cursor: pointer;
+    margin: 1em;
+    font-family: "Inter", Arial, Helvetica, sans-serif;
+}
+
+.btn-primary:hover {
+    background-color: #9caf9c;
+}
+
 .gift-list {
     list-style: none;
     padding: 0;
@@ -25,6 +50,16 @@
 
 .gift-card button:hover {
     background-color: rgb(8, 125, 28);
+}
+
+.gift-link {
+    display: inline-block;
+    text-decoration: underline;
+    padding: 0.35em 0.7em;
+    font-size: 0.95em;
+    border-radius: 8px;
+    font-weight: 600;
+    color: #333;
 }
 
 .gift-image img {

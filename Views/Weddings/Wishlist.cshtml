@@ -4,7 +4,14 @@
     <link rel="stylesheet" href="~/css/wishlist.css" />
 }
 
-<h2>@Model.FirstPerson & @Model.SecondPerson's Wishlist</h2>
+@section HideNavbar { }
+
+<div class="top-content">
+    <h2>@Model.FirstPerson & @Model.SecondPerson's Wishlist</h2>
+    <a href="/wedding/@Model.PublicSlug" class="btn btn-primary">
+        Back to Wedding
+    </a>
+</div>
 
 <ul id="giftList" class="gift-list">
 @foreach (var gift in Model.Gifts)
@@ -36,7 +43,7 @@
             @if (!string.IsNullOrEmpty(gift.Link))
             {
                 <p>
-                    <a href="@gift.Link" target="_blank" rel="noopener">
+                    <a href="@gift.Link" target="_blank" rel="noopener" class="gift-link">
                         View product
                     </a>
                 </p>
