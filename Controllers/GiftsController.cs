@@ -183,8 +183,7 @@ namespace WeddingApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(
             int id,
-            [Bind("GiftId,Name,Description,Link,Price,GiftImagePath")] Gift updatedGift,
-            IFormFile? giftImage
+            [Bind("GiftId,Name,Description,Link,Price,GiftImageFile")] Gift updatedGift
         )
         {
             if (id != updatedGift.GiftId)
@@ -209,14 +208,10 @@ namespace WeddingApp.Controllers
                 gift.Link = updatedGift.Link;
                 gift.Price = updatedGift.Price;
 
-                // Handle optional new image
-                if (giftImage != null && giftImage.Length > 0)
+                // Handle optional image
+                if (updatedGift.GiftImageFile != null && updatedGift.GiftImageFile.Length > 0)
                 {
-                    // Buffer file in memory
-                    using var ms = new MemoryStream();
-                    await giftImage.CopyToAsync(ms);
-
-                    // Create uploads folder if it does not exist
+                    // Create path to uploads folder
                     var uploadsFolder = Path.Combine(
                         Directory.GetCurrentDirectory(),
                         "wwwroot",
@@ -224,14 +219,16 @@ namespace WeddingApp.Controllers
                     );
                     Directory.CreateDirectory(uploadsFolder);
 
-                    // Give the gift image file a unique name
-                    var uniqueFileName = $"{Guid.NewGuid()}_{giftImage.FileName}";
+                    // Give the new file a unique name
+                    var uniqueFileName = $"{Guid.NewGuid()}_{updatedGift.GiftImageFile.FileName}";
                     var filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
-                    // Write buffered file to server
+                    // Read to memory before saving
+                    using var ms = new MemoryStream();
+                    await updatedGift.GiftImageFile.CopyToAsync(ms);
                     await System.IO.File.WriteAllBytesAsync(filePath, ms.ToArray());
 
-                    // Update path for database and views
+                    // Update path in database
                     gift.GiftImagePath = $"/uploads/{uniqueFileName}";
                 }
 

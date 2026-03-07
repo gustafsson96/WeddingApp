@@ -50,7 +50,8 @@
             }       
             <div class="form-group">
                 <label>Change Image</label>
-                <input asp-for="GiftImagePath" type="file" class="form-control" />
+                <input asp-for="GiftImageFile" type="file" class="form-control" />
+                <span asp-validation-for="GiftImageFile" class="text-danger"></span>
             </div>
             <!-- Buttons -->
             <div class="form-group form-buttons">
