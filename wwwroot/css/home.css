@@ -151,6 +151,43 @@ html, body {
     margin-bottom: 2em;
 }
 
+.contact-section form {
+    background: #ffffff;
+    margin: 0 auto;
+    padding: 2em;
+    border-radius: 5px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    max-width: 600px;
+    text-align: left;
+}
+
+.contact-section form:hover {
+    box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+}
+
+.contact-section .form-control {
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    padding: 12px;
+    transition: border-color 0.2s;
+}
+
+.contact-section .form-control:focus {
+    border-color: #3f3f3f;
+    box-shadow: 0 0 8px rgba(147, 147, 147, 0.781);
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border-radius: 18x;
+    padding: 1em;
+    margin: 1em auto 2em;
+    font-weight: 500;
+    max-width: 400px;
+}
+
 /* Buttons */
 .btn {
     padding: 0.8em 1.8em;
@@ -179,6 +216,11 @@ html, body {
 .btn.secondary:hover {
     background-color: transparent;
     color: white;
+}
+
+.cancel-btn {
+    text-decoration: underline;
+    padding: 0.5em;
 }
 
 /* Media query for screens smaller than 768px */
