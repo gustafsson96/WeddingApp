@@ -15,10 +15,9 @@ h2 {
   font-weight: 500;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+/* Navbar */
+.navbar .fa-user {
+  font-size: 1.2rem;
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
@@ -41,4 +40,11 @@ body {
 
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
+}
+
+
+@media (min-width: 768px) {
+    html {
+      font-size: 16px;
+    }
 }
