@@ -32,9 +32,13 @@ html, body {
     padding: 0 2em;
 }
 
-.hero h1 {
-    font-size: 3em;
-    font-style: italic;
+.hero-content h1 {
+    font-size: 4em;
+}
+
+.hero-content p {
+    font-size: 1.4em;
+    font-family: "Playfair display", serif;
 }
 
 .home-container {
