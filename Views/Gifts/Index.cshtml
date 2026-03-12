@@ -13,24 +13,20 @@
     var reservedGifts = allGifts.Where(g => g.IsReserved).ToList();
 }
 
-<div class="page-wrapper">
-
 @if (!allGifts.Any())
 {
-    <div class="empty-state">
-        <h2>No gifts have been added yet.</h2>
-        <p>Start by adding your first gift to build your wishlist.</p>
-        <a asp-action="Create" class="btn btn-primary">Add First Gift</a>
-
-        <div class="back-btn">
-            <a asp-controller="Dashboard" asp-action="Index" class="btn btn-secondary">Back to Dashboard</a>
+            <div class="page-wrapper">
+                <div class="empty-state">
+                <h2>No gifts have been added yet.</h2>
+                <p>Start by adding your first gift to build your wishlist.</p>
+                <a asp-action="Create" class="btn btn-primary">Add First Gift</a>
+                <div class="back-btn">
+                    <a asp-controller="Dashboard" asp-action="Index" class="btn btn-secondary">Back to Dashboard</a>
+                </div>
+            </div>
         </div>
-    </div>
-
     return;
 }
-</div>
-
     <h1 class="page-title">Gifts</h1>
 
     <!-- Add new gift button -->
@@ -45,12 +41,17 @@
             @TempData["Message"]
         </div>
     }
+
+    <div class="filter-tabs">
+        <a asp-action="Index" asp-route-filter="all" class="filter-tab @(currentFilter == "all" ? "active" : "")">All Gifts</a>
+        <a asp-action="Index" asp-route-filter="available" class="filter-tab @(currentFilter == "available" ? "active" : "")">Available</a>
+        <a asp-action="Index" asp-route-filter="reserved" class="filter-tab @(currentFilter == "reserved" ? "active" : "")">Reserved</a>
+    </div>
+
     @* All Gifts *@
     @if (currentFilter == "all")
     {
         <div class="gift-section">
-
-
             @if (!allGifts.Any())
             {
                 <div class="empty-state">
@@ -97,8 +98,6 @@
                                 </td>
                                 <td class="action-links">
                                     <a asp-action="Edit" asp-route-id="@gift.GiftId">Edit</a> |
-                                    <a asp-action="Details" asp-route-id="@gift.GiftId">Details</a> |
-                                    
                                     <form asp-action="Delete" method="post" style="display:inline;" 
                                         onsubmit="return confirm('Are you sure you want to delete @gift.Name?');">
                                         @Html.AntiForgeryToken()
@@ -153,7 +152,6 @@
                                 <td><span class="status available">Available</span></td>
                             <td class="action-links">
                                 <a asp-action="Edit" asp-route-id="@gift.GiftId">Edit</a> |
-                                <a asp-action="Details" asp-route-id="@gift.GiftId">Details</a> |
                                 
                                 <form asp-action="Delete" method="post" style="display:inline;" 
                                     onsubmit="return confirm('Are you sure you want to delete @gift.Name?');">
@@ -209,7 +207,6 @@
                                 <td><span class="status reserved">Reserved</span></td>
                                 <td class="action-links">
                                     <a asp-action="Edit" asp-route-id="@gift.GiftId">Edit</a> |
-                                    <a asp-action="Details" asp-route-id="@gift.GiftId">Details</a> |
                                     <a asp-action="Delete" asp-route-id="@gift.GiftId">Delete</a>
                                 </td>
                             </tr>
@@ -223,4 +220,3 @@
     <div class="back-btn">
         <a asp-controller="Dashboard" asp-action="Index" class="btn btn-secondary">Back to Dashboard</a>
     </div>
-</div>
