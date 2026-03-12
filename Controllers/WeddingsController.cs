@@ -341,7 +341,7 @@ namespace WeddingApp.Controllers
         // Create slug based on names of wedding couple
         private async Task<string> GenerateUniqueSlug(string first, string second)
         {
-            // Replace Swedish characters
+            // Ensure lowercase letters and replace Swedish characters
             string baseSlug = $"{first}-and-{second}"
                 .ToLower()
                 .Trim()
