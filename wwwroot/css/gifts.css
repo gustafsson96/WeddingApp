@@ -1,5 +1,9 @@
 /* Styling for gift table in admin view */
 
+.page-wrapper {
+    margin: 5em 0 8em;
+}
+
 .gift-actions {
     margin-bottom: 1.5em;
 }
@@ -129,8 +133,8 @@
     color: #9caf9c;
 }
 
-.back-container {
-    margin-top: 1.5em;
+.back-btn {
+    margin-top: 1em;
 }
 
 /* Form styling for gifts create and edit */

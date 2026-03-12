@@ -15,19 +15,26 @@
     var guestsNotSent = Model.Where(g => g.InvitationSentAt == null).ToList();
 }
 
-@if (!Model.Any())
-{
-    <div class="empty-state">
-        <h2>No guests added yet</h2>
-        <p>Start by adding your first guest to send invitations.</p>
-        <a asp-action="Create" class="btn btn-primary">
-            Add First Guest
-        </a>
-    </div>
 
-    return;
-}
+<div class="page-wrapper">
+    @if (!Model.Any())
+    {
+        <div class="empty-state">
+            <h2>No guests added yet</h2>
+            <p>Start by adding your first guest to send invitations.</p>
+            <a asp-action="Create" class="btn btn-primary">
+                Add First Guest
+            </a>
+            <div class="back-btn">
+                <a asp-controller="Dashboard" asp-action="Index" class="btn btn-secondary">Back to Dashboard</a>
+            </div>
+        </div>
 
+        return;
+    }
+</div>
+
+<div>
 <h1 class="page-title">Guest List</h1>
 
 <!-- Add new guest/Back to dashboard buttons -->

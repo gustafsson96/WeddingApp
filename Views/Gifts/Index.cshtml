@@ -13,78 +13,144 @@
     var reservedGifts = allGifts.Where(g => g.IsReserved).ToList();
 }
 
-<h1 class="page-title">Gifts</h1>
+<div class="page-wrapper">
 
-<!-- Add new gift button -->
-<div class="gift-actions">
-    <a asp-action="Create" class="btn btn-primary">Add New Gift</a>
-</div>
-
-<!-- TempData-meddelanden -->
-@if (TempData["Message"] != null)
+@if (!allGifts.Any())
 {
-    <div class="alert alert-success custom-alert">
-        @TempData["Message"]
+    <div class="empty-state">
+        <h2>No gifts have been added yet.</h2>
+        <p>Start by adding your first gift to build your wishlist.</p>
+        <a asp-action="Create" class="btn btn-primary">Add First Gift</a>
+
+        <div class="back-btn">
+            <a asp-controller="Dashboard" asp-action="Index" class="btn btn-secondary">Back to Dashboard</a>
+        </div>
     </div>
-}
 
-<!-- Filter tabs -->
-<div class="filter-tabs">
-    <a asp-action="Index" asp-route-filter="all" class="filter-tab @(currentFilter == "all" ? "active" : "")">All Gifts</a>
-    <a asp-action="Index" asp-route-filter="available" class="filter-tab @(currentFilter == "available" ? "active" : "")">Available</a>
-    <a asp-action="Index" asp-route-filter="reserved" class="filter-tab @(currentFilter == "reserved" ? "active" : "")">Reserved</a>
+    return;
+}
 </div>
 
-@* All Gifts *@
-@if (currentFilter == "all")
-{
-    <div class="gift-section">
+    <h1 class="page-title">Gifts</h1>
+
+    <!-- Add new gift button -->
+    <div class="gift-actions">
+        <a asp-action="Create" class="btn btn-primary">Add New Gift</a>
+    </div>
+
+    <!-- TempData-meddelanden -->
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success custom-alert">
+            @TempData["Message"]
+        </div>
+    }
+    @* All Gifts *@
+    @if (currentFilter == "all")
+    {
+        <div class="gift-section">
 
 
-        @if (!allGifts.Any())
-        {
-            <div class="empty-state">
-                <h2>No gifts have been added yet.</h2>
-                <a asp-action="Create" class="btn btn-primary">Add First Gift</a>
-            </div>
-        }
-        else
-        {   
-            <h2 class="section-title">All Gifts</h2>
-            <table class="gift-table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Link</th>
-                        <th>Price</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var gift in allGifts)
-                    {
+            @if (!allGifts.Any())
+            {
+                <div class="empty-state">
+                    <h2>No gifts have been added yet.</h2>
+                    <a asp-action="Create" class="btn btn-primary">Add First Gift</a>
+                </div>
+            }
+            else
+            {   
+                <h2 class="section-title">All Gifts</h2>
+                <table class="gift-table">
+                    <thead>
                         <tr>
-                            <td>@gift.Name</td>
-                            <td>@gift.Description</td>
-                            <td>
-                                @if (!string.IsNullOrEmpty(gift.Link))
-                                {
-                                    <a href="@gift.Link" target="_blank" class="gift-link btn">View Gift</a>
-                                }
-                            </td>
-                            <td>@($"{gift.Price} SEK")</td>
-                            <td>
-                                @if (gift.IsReserved)
-                                {
-                                    <span class="status reserved">Reserved</span>
-                                }
-                                else
-                                {
-                                    <span class="status available">Available</span>
-                                }
-                            </td>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Link</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var gift in allGifts)
+                        {
+                            <tr>
+                                <td>@gift.Name</td>
+                                <td>@gift.Description</td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(gift.Link))
+                                    {
+                                        <a href="@gift.Link" target="_blank" class="gift-link btn">View Gift</a>
+                                    }
+                                </td>
+                                <td>@($"{gift.Price} SEK")</td>
+                                <td>
+                                    @if (gift.IsReserved)
+                                    {
+                                        <span class="status reserved">Reserved</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="status available">Available</span>
+                                    }
+                                </td>
+                                <td class="action-links">
+                                    <a asp-action="Edit" asp-route-id="@gift.GiftId">Edit</a> |
+                                    <a asp-action="Details" asp-route-id="@gift.GiftId">Details</a> |
+                                    
+                                    <form asp-action="Delete" method="post" style="display:inline;" 
+                                        onsubmit="return confirm('Are you sure you want to delete @gift.Name?');">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@gift.GiftId" />
+                                        <button type="submit" class="btn delete-btn">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    }
+
+    @* Available Gifts *@
+    @if (currentFilter == "available")
+    {
+        <div class="gift-section">
+            <h2 class="section-title">Available Gifts</h2>
+
+            @if (!availableGifts.Any())
+            {
+                <p class="empty-message">No available gifts at the moment.</p>
+            }
+            else
+            {
+                <table class="gift-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Link</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var gift in availableGifts)
+                        {
+                            <tr>
+                                <td>@gift.Name</td>
+                                <td>@gift.Description</td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(gift.Link))
+                                    {
+                                        <a href="@gift.Link" target="_blank" class="gift-link btn">View Gift</a>
+                                    }
+                                </td>
+                                <td>@($"{gift.Price} SEK")</td>
+                                <td><span class="status available">Available</span></td>
                             <td class="action-links">
                                 <a asp-action="Edit" asp-route-id="@gift.GiftId">Edit</a> |
                                 <a asp-action="Details" asp-route-id="@gift.GiftId">Details</a> |
@@ -96,120 +162,65 @@
                                     <button type="submit" class="btn delete-btn">Delete</button>
                                 </form>
                             </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        }
-    </div>
-}
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    }
 
-@* Available Gifts *@
-@if (currentFilter == "available")
-{
-    <div class="gift-section">
-        <h2 class="section-title">Available Gifts</h2>
+    @* Reserved Gifts *@
+    @if (currentFilter == "reserved")
+    {
+        <div class="gift-section">
+            <h2 class="section-title">Reserved Gifts</h2>
 
-        @if (!availableGifts.Any())
-        {
-            <p class="empty-message">No available gifts at the moment.</p>
-        }
-        else
-        {
-            <table class="gift-table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Link</th>
-                        <th>Price</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var gift in availableGifts)
-                    {
+            @if (!reservedGifts.Any())
+            {
+                <p class="empty-message">No reserved gifts at the moment.</p>
+            }
+            else
+            {
+                <table class="gift-table">
+                    <thead>
                         <tr>
-                            <td>@gift.Name</td>
-                            <td>@gift.Description</td>
-                            <td>
-                                @if (!string.IsNullOrEmpty(gift.Link))
-                                {
-                                    <a href="@gift.Link" target="_blank" class="gift-link btn">View Gift</a>
-                                }
-                            </td>
-                            <td>@($"{gift.Price} SEK")</td>
-                            <td><span class="status available">Available</span></td>
-                        <td class="action-links">
-                            <a asp-action="Edit" asp-route-id="@gift.GiftId">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@gift.GiftId">Details</a> |
-                            
-                            <form asp-action="Delete" method="post" style="display:inline;" 
-                                onsubmit="return confirm('Are you sure you want to delete @gift.Name?');">
-                                @Html.AntiForgeryToken()
-                                <input type="hidden" name="id" value="@gift.GiftId" />
-                                <button type="submit" class="btn delete-btn">Delete</button>
-                            </form>
-                        </td>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Link</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Actions</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
-        }
+                    </thead>
+                    <tbody>
+                        @foreach (var gift in reservedGifts)
+                        {
+                            <tr>
+                                <td>@gift.Name</td>
+                                <td>@gift.Description</td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(gift.Link))
+                                    {
+                                        <a href="@gift.Link" target="_blank" class="gift-link btn">View Gift</a>
+                                    }
+                                </td>
+                                <td>@($"{gift.Price} SEK")</td>
+                                <td><span class="status reserved">Reserved</span></td>
+                                <td class="action-links">
+                                    <a asp-action="Edit" asp-route-id="@gift.GiftId">Edit</a> |
+                                    <a asp-action="Details" asp-route-id="@gift.GiftId">Details</a> |
+                                    <a asp-action="Delete" asp-route-id="@gift.GiftId">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    }
+
+    <div class="back-btn">
+        <a asp-controller="Dashboard" asp-action="Index" class="btn btn-secondary">Back to Dashboard</a>
     </div>
-}
-
-@* Reserved Gifts *@
-@if (currentFilter == "reserved")
-{
-    <div class="gift-section">
-        <h2 class="section-title">Reserved Gifts</h2>
-
-        @if (!reservedGifts.Any())
-        {
-            <p class="empty-message">No reserved gifts at the moment.</p>
-        }
-        else
-        {
-            <table class="gift-table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Link</th>
-                        <th>Price</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var gift in reservedGifts)
-                    {
-                        <tr>
-                            <td>@gift.Name</td>
-                            <td>@gift.Description</td>
-                            <td>
-                                @if (!string.IsNullOrEmpty(gift.Link))
-                                {
-                                    <a href="@gift.Link" target="_blank" class="gift-link btn">View Gift</a>
-                                }
-                            </td>
-                            <td>@($"{gift.Price} SEK")</td>
-                            <td><span class="status reserved">Reserved</span></td>
-                            <td class="action-links">
-                                <a asp-action="Edit" asp-route-id="@gift.GiftId">Edit</a> |
-                                <a asp-action="Details" asp-route-id="@gift.GiftId">Details</a> |
-                                <a asp-action="Delete" asp-route-id="@gift.GiftId">Delete</a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        }
-    </div>
-}
-
-<div class="back-btn">
-    <a asp-controller="Dashboard" asp-action="Index" class="btn btn-secondary">Back to Dashboard</a>
 </div>

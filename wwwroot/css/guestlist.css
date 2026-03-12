@@ -1,5 +1,9 @@
 /* Styling for guestlist (index, create, edit) */
 
+.page-wrapper {
+    margin: 5em 0 8em;
+}
+
 .guestlist-section {
     background-color: #fff;
     text-align: center;
@@ -196,7 +200,7 @@
 }
 
 .back-btn {
-    margin-top: 2.5em;
+    margin-top: 1em;
 }
 
 .cancel-btn {
