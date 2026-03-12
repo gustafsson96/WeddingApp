@@ -50,27 +50,18 @@
 
     @* All Gifts *@
     @if (currentFilter == "all")
-    {
+    { 
         <div class="gift-section">
-            @if (!allGifts.Any())
-            {
-                <div class="empty-state">
-                    <h2>No gifts have been added yet.</h2>
-                    <a asp-action="Create" class="btn btn-primary">Add First Gift</a>
-                </div>
-            }
-            else
-            {   
-                <h2 class="section-title">All Gifts</h2>
-                <table class="gift-table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Link</th>
-                            <th>Price</th>
-                            <th>Status</th>
-                            <th>Actions</th>
+        <h2 class="section-title">All Gifts</h2>
+            <table class="gift-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Link</th> 
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -87,32 +78,31 @@
                                 </td>
                                 <td>@($"{gift.Price} SEK")</td>
                                 <td>
-                                    @if (gift.IsReserved)
+                                   @if (gift.IsReserved)
                                     {
                                         <span class="status reserved">Reserved</span>
                                     }
                                     else
                                     {
                                         <span class="status available">Available</span>
-                                    }
-                                </td>
-                                <td class="action-links">
+                                   }
+                                    </td>
+                                    <td class="action-links">
                                     <a asp-action="Edit" asp-route-id="@gift.GiftId">Edit</a> |
                                     <form asp-action="Delete" method="post" style="display:inline;" 
                                         onsubmit="return confirm('Are you sure you want to delete @gift.Name?');">
                                         @Html.AntiForgeryToken()
-                                        <input type="hidden" name="id" value="@gift.GiftId" />
-                                        <button type="submit" class="btn delete-btn">Delete</button>
-                                    </form>
-                                </td>
-                            </tr>
+                                    <input type="hidden" name="id" value="@gift.GiftId" />
+                                    <button type="submit" class="btn delete-btn">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
                         }
                     </tbody>
-                </table>
-            }
-        </div>
+            </table>
+        </div> 
     }
-
+                
     @* Available Gifts *@
     @if (currentFilter == "available")
     {
