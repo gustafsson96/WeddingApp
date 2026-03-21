@@ -102,7 +102,7 @@ Databasen skapas med hjälp av Entity Framework Core migrationer där modellerna
 
 ## Instruktioner för att sätta upp och köra projektet
 
-1. Klona projektet via följande kommandon: 
+1. Klona projektet och navigera till projektmappen via följande kommandon: 
 * git clone https://github.com/gustafsson96/WeddingApp.git 
 * cd WeddingApp
 
