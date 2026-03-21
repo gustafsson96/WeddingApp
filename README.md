@@ -1,6 +1,6 @@
 # Ever After - Projektuppgift
 
-Ever After är en webbaserad ASP.NET Core MCV-applikation som avser underlätta bröllopsplanering för framtida brudpar.
+Ever After är en webbaserad ASP.NET Core MVC-applikation som avser underlätta bröllopsplanering för framtida brudpar.
 Applikationen möjliggör registrering och inloggning och en registrerad användare kan skapa och hantera en personlig bröllopssida
 med tillhörande gästlista och önskelista. Man kan även skicka ut inbjudningar via epost till tillagda gäster, där de får möjlighet
 att svara via ett RSVP-formulär. Gäster kan även reservera presenter i önskelistan. 
@@ -35,28 +35,26 @@ Inloggade användare kan:
 
 ## Tekniker och ramverk
 Projektet använder följande tekniker: 
-* ASP.NET Core MVC
-* Entity Framework Core
-* ASP.NET Core Identity
-* SQLite
-* Mailkit/Mimekit
-* DotNetEnv
-* SendGrid
-
-Förklara teknikernas ansvarsområden innan inlämning!
+* ASP.NET Core MVC: Strukturerar applikationen i ett Models-Views-Controller-mönster. 
+* Entity Framework Core: Hanterar databasen. 
+* ASP.NET Core Identity: För autentisering och användarhantering. 
+* SQLite: Vald databas. 
+* Mailkit/Mimekit: Bygger och skickar epost via SMTP. 
+* DotNetEnv: Läser in variabler från en .env-fil. 
+* SendGrid: Extern e-posttjänst. 
 
 ## NuGet-paket
 Projektet använder följande NuGet-paket:
 
-* DotNetEnv – används för att läsa miljövariabler från .env-fil
-* MailKit – används för att skicka e-post via SMTP
-* Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore – felhantering för databasen under utveckling
-* Microsoft.AspNetCore.Identity.EntityFrameworkCore – autentisering och användarhantering
-* Microsoft.AspNetCore.Identity.UI – färdiga vyer för login/registrering
-* Microsoft.EntityFrameworkCore.Sqlite – SQLite-databas
-* Microsoft.EntityFrameworkCore.SqlServer – stöd för SQL Server (installerades för publicering, ej aktuell i nuläget)
-* Microsoft.EntityFrameworkCore.Tools – används för migrationer via CLI
-* Microsoft.VisualStudio.Web.CodeGeneration.Design – används för scaffolding
+* DotNetEnv – används för att läsa miljövariabler från .env-fil.
+* MailKit – används för att bygga och skicka e-post via SMTP.
+* Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore – felhantering för databasen under utveckling.
+* Microsoft.AspNetCore.Identity.EntityFrameworkCore – autentisering och användarhantering med databaskoppling.
+* Microsoft.AspNetCore.Identity.UI – färdiga vyer för login/registrering.
+* Microsoft.EntityFrameworkCore.Sqlite – SQLite-databas.
+* Microsoft.EntityFrameworkCore.SqlServer – stöd för SQL Server (installerades för publicering, ej aktuell i nuläget).
+* Microsoft.EntityFrameworkCore.Tools – används för migrationer via CLI.
+* Microsoft.VisualStudio.Web.CodeGeneration.Design – används för scaffolding.
 
 
 ## Databasmodell
@@ -99,22 +97,26 @@ Representerar en present i önskelistan och innehåller:
 * Reservationsstatus 
 
 Varje present är kopplad till ett specifikt bröllop via WeddingId. 
+<br><br>
+Databasen skapas med hjälp av Entity Framework Core migrationer där modellerna översätts till databastabeller. Innehåll skapas av användaren via applikationen.
 
 ## Instruktioner för att sätta upp och köra projektet
 
 1. Klona projektet via följande kommandon: 
-git clone 
-cd 
+* git clone https://github.com/gustafsson96/WeddingApp.git 
+* cd WeddingApp
 
 2. Kontrollera att .NET SDK är installerat via dotnet --version
 
-3. Installera NuGet via dotnet restore? 
+3. Installera beroenden (NuGet-paket) via: dotnet restore
 
-4. Konfigurera databaskoppling genom att kontrollera att korrekt connection string finns i projektet innan databasen skapas. 
+4. Skapa en .env-fil och lägg till miljövariabler för SMTP-server och verifierad avsändarmail. 
+* SENDGRID_API_KEY=din_api_nyckel
+* SENDGRID_SENDER=din_verifierade_epost
 
-5. Skapa en .env-fil och till miljövariabler för SMTP-server och verifierad avsändarmail. 
+5. Konfigurera databaskoppling genom att kontrollera att korrekt connection string finns i projektet innan databasen skapas. 
 
-6. Skapa databasen via dotnet ef database update (skapa migrationer först om de saknas via dotnet ef migration add InitialCreate och dotnet ef database update). 
+6. Skapa databasen via 'dotnet ef database update' (skapa migrationer först om de saknas via 'dotnet ef migration add InitialCreate' och 'dotnet ef database update'). 
 
 7. Starta projektet med dotnet run. 
 
