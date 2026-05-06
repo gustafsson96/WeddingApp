@@ -40,24 +40,17 @@
     </div>
 </section>
 
-<section class="registry-btn text-center">
-    <a asp-controller="Weddings"
-       asp-action="Wishlist"
-       asp-route-slug="@Model.PublicSlug"
-       class="btn btn-primary">
-       View Registry
-    </a>
-</section>
-
-<section class="wedding-info">
-    <p class="big-info">@Model.Venue</p>
-    <p class="small-info">@Model.Date.ToString("MMMM d yyyy")</p>
-    <p class="small-info">Starts: @Model.Time</p>
-    @if (!string.IsNullOrEmpty(Model.AdditionalInfo))
-    {
-        <p class="small-info">@Model.AdditionalInfo</p>
-    }
-</section>
+@if (Model.Gifts.Any())
+{
+    <section class="registry-btn text-center">
+        <a asp-controller="Weddings"
+           asp-action="Wishlist"
+           asp-route-slug="@Model.PublicSlug"
+           class="btn btn-primary">
+           View Registry
+        </a>
+    </section>
+}
 
 <div class="end-container">
     <p>@Model.FirstPerson & @Model.SecondPerson</p>
